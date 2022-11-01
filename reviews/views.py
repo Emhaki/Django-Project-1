@@ -12,6 +12,7 @@ def index(request):
     }
     return render(request, "reviews/index.html", context)
 
+
 def store(request):
   if request.method == 'POST':
     store_form = StoreForm(request.POST, request.FILES)
