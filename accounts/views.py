@@ -7,7 +7,6 @@ from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 
-# Create your views here.
 
 
 def create(request):
@@ -15,8 +14,10 @@ def create(request):
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
+
             auth_login(request, user)
             return redirect("accounts:login")
+
     else:
         form = CustomUserCreationForm()
     context = {"form": form}
@@ -51,3 +52,11 @@ def follow(request, pk):
     else:
         user.followers.add(request.user)
     return redirect("accounts:detail", pk)
+
+def detail(request,user_pk):
+    user= get_user_model().objects.get(pk=user_pk)
+    context={
+        'user':user
+    }
+    return render(request, 'accounts.detail.html', context)
+
