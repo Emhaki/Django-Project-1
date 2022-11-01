@@ -28,17 +28,39 @@
           <div class="col-4">
             <a class="navbar-brand fw-bold" href="#">맛집리스트</a>
             <a class="navbar-brand fw-bold" href="#">가격대별</a>
+            </div>
           </div>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Dropdown
+            </a>
+            <ul class="dropdown-menu">
+              {% if request.user.is_authenticated %}
+              <li><a class="navbar-brand fw-bold" href="{% url 'accounts:logout' %}">로그아웃</a></li>
+                <li><a class="navbar-brand fw-bold" href="{% url 'accounts:update' %}">회원정보수정</a></li>
+              <div class="d-flex" style="align-items:center">
+                <span>
+                  <a class="text-decoration: none" href="{% url 'accounts:detail' user.pk %}">{{ request.user }}</a>
+                  <b class="">님,환영합니다!</b>
+                </span>
+              {% else %}
+              <li><a class="navbar-brand fw-bold" href="{% url 'accounts:login' %}">로그인</a></li>
+                <li><a class="navbar-brand fw-bold" href="{% url 'accounts:create' %}">회원가입</a></li>
+              {% endif %}
+            </ul>
+          </li>
           <a href="" class="text-dark" style="text-decoration: none;">
+            
             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
               <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
               <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
             </svg>
           </a>
+ 
       </div>
     </nav>
     {% block content %} {% endblock content %}
     {% bootstrap_javascript %}
   </body>
-
+  {% block content %} {% endblock content %}
 </html>
