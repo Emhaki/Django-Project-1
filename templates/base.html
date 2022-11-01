@@ -17,19 +17,27 @@
   <body>
     {% comment %} navbar - fixed-top {% endcomment %}
     <nav class="navbar fixed-top" style="background-color: #ffba08;">
-      <div class="container-fluid">
-        <a class="navbar-brand fw-bold" href="#">맛짱</a>
-      <div>
-        <a class="navbar-brand fw-bold" href="#">맛집리스트</a>
-        <a class="navbar-brand fw-bold" href="#">가격대별</a>
-      </div>
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-dark" type="submit">Search</button>
-      </form>
-      <a href="">로그인</a>
+      <div class="container">
+          <div class="col-4">
+            <a class="navbar-brand fw-bold fs-4" href="#">맛짱</a>
+          </div>
+          <form class="d-flex" role="search">
+              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-outline-dark" type="submit">Search</button>
+          </form>
+          <div class="col-4">
+            <a class="navbar-brand fw-bold" href="#">맛집리스트</a>
+            <a class="navbar-brand fw-bold" href="#">가격대별</a>
+          </div>
+          <a href="" class="text-dark" style="text-decoration: none;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+              <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+              <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+            </svg>
+          </a>
       </div>
     </nav>
+
     {% bootstrap_javascript %}
   </body>
   {% block content %} {% endblock content %}
