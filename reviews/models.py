@@ -10,18 +10,9 @@ class Store(models.Model):
     store_name = models.CharField(max_length=80)
     address = models.CharField(max_length=160)
     phone_num = models.CharField(max_length=80)
+    menu = models.CharField(max_length=80)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
-
-class Menu(models.Model):
-    store = models.ForeignKey(Store, on_delete=models.CASCADE)
-    menu_name = models.CharField(max_length=80)
-    menu_price = models.IntegerField()
-
-
-class Store_image(models.Model):
-    store = models.ForeignKey(Store, on_delete=models.CASCADE)
     image = ProcessedImageField(
         upload_to="images/",
         blank=True,
@@ -42,11 +33,7 @@ class Review(models.Model):
         validators=[MinValueValidator(0), MaxValueValidator(5)],
     )
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-
-
-class Review_image(models.Model):
-    review = models.ForeignKey(Review, on_delete=models.CASCADE)
-    review_image = ProcessedImageField(
+    image = ProcessedImageField(
         upload_to="images/",
         blank=True,
         processors=[ResizeToFill(1200, 960)],
