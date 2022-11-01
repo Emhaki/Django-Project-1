@@ -15,6 +15,7 @@
     {% bootstrap_css %}
   </head>
   <body>
+    {% block content %} {% endblock content %}
     {% comment %} navbar - fixed-top {% endcomment %}
     <nav class="navbar fixed-top" style="background-color: #ffba08;">
       <div class="container">
@@ -40,5 +41,5 @@
 
     {% bootstrap_javascript %}
   </body>
-  {% block content %} {% endblock content %}
+
 </html>
