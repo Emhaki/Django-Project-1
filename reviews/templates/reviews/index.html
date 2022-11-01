@@ -2,4 +2,14 @@
 {% load django_bootstrap5 %}
 {% load static %}
 
-{% block content %}{% endblock content %}
+{% block content %}
+<h1>여기가 홈 입니다!</h1>
+{% for store in stores %}
+  <h3>가게 이름 :
+    {{store.store_name}}</h3>
+  {% for menu in store.menu.all %}
+    <p>{{menu.menu_name}}</p>
+  {% endfor %}
+{% endfor %}
+{% endblock content %}
+
