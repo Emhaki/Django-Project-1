@@ -9,11 +9,11 @@ class Store(models.Model):
     phone_num = models.CharField(max_length=80)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    menu = models.ForeignKey("Menu", on_delete=models.CASCADE)
+    menu = models.ForeignKey("Menu", on_delete=models.CASCADE, related_name="mj_menu")
 
 
 class Menu(models.Model):
-    store = models.ForeignKey(Store, on_delete=models.CASCADE)
+    store = models.ForeignKey(Store, on_delete=models.CASCADE, related_name="mj_store")
     menu_name = models.CharField(max_length=80)
     menu_price = models.IntegerField()
 
