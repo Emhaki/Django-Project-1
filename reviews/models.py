@@ -33,6 +33,7 @@ class Review(models.Model):
         validators=[MinValueValidator(0), MaxValueValidator(5)],
     )
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    store = models.ForeignKey(Store, on_delete=models.CASCADE)
     image = ProcessedImageField(
         upload_to="images/",
         blank=True,
