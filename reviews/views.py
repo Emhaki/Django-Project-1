@@ -23,7 +23,7 @@ def store(request):
     store_form = StoreForm()
   
   context = {
-    
+    "store_form": store_form,
   }
 
   return render(request, 'reviews/store.html', context)
