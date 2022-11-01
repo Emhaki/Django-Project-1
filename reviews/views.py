@@ -14,20 +14,21 @@ def index(request):
 
 
 def store(request):
-  if request.method == 'POST':
-    store_form = StoreForm(request.POST, request.FILES)
-    if store_form.is_valid():
-      store = store_form.save(commit=False)
-      store.save()
-      return redirect("reviews:index")
-  else:
-    store_form = StoreForm()
-  
-  context = {
-    "store_form": store_form,
-  }
+    if request.method == "POST":
+        store_form = StoreForm(request.POST, request.FILES)
+        if store_form.is_valid():
+            store = store_form.save(commit=False)
+            store.save()
+            return redirect("reviews:index")
+    else:
+        store_form = StoreForm()
 
-  return render(request, 'reviews/store.html', context)
+    context = {
+        "store_form": store_form,
+    }
+
+    return render(request, "reviews/store.html", context)
+
 
 def store_detail(request, store_pk):
     store = Store.objects.get(pk=store_pk)
@@ -40,9 +41,9 @@ def store_detail(request, store_pk):
 def review_create(request, store_pk):
     store = Store.objects.get(pk=store_pk)
     if request.method == "POST":
-        review_form = ReviewForm(request.POST)
+        review_form = ReviewForm(request.POST, request.FILES)
         if review_form.is_valid():
-            review = review_form(commit=False)
+            review = review_form.save(commit=False)
             review.store = store
             review.user = request.user
             review.save()
