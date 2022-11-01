@@ -4,4 +4,27 @@
 {% block content %}
   <h1>조회</h1>
   {{ user.username}}
+  <p>팔로우{{ user.followings.count }}</p>
+  <p>팔로워{{ user.followers.count }}</p>
+  {% for i in user.followings.all %}
+    <p>팔로우 목록:{{ i }},</p>
+  {% endfor %}
+
+  {% for i in user.followers.all %}
+    <p>팔로워 목록:{{ i }},</p>
+  {% endfor %}
+  {% if request.user != user %}
+    <form action="{% url 'accounts:follow' user.pk %}" method="POST">
+      {% if request.user.is_authenticated %}
+        {% csrf_token %}
+        {% if request.user in user.followers.all %}
+          {%bootstrap_button button_type="submit" content="팔로우 취소"%}
+        {% else %}
+          {%bootstrap_button button_type="submit" content="팔로우"%}
+        {% endif %}
+      </form>
+    {% else %}
+      {%bootstrap_button button_type="submit" content="로그인 필요합니다."%}
+    {% endif %}
+  {% endif %}
 {% endblock content %}
