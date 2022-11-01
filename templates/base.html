@@ -1,0 +1,36 @@
+{% load django_bootstrap5 %}  {% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{% static 'style.css' %}?{% now 'U'%}" />
+    <title>Document</title>
+    {% bootstrap_css %}
+  </head>
+  <body>
+    {% comment %} navbar - fixed-top {% endcomment %}
+    <nav class="navbar fixed-top" style="background-color: #ffba08;">
+      <div class="container-fluid">
+        <a class="navbar-brand fw-bold" href="#">맛짱</a>
+      <div>
+        <a class="navbar-brand fw-bold" href="#">맛집리스트</a>
+        <a class="navbar-brand fw-bold" href="#">가격대별</a>
+      </div>
+      <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-dark" type="submit">Search</button>
+      </form>
+      <a href="">로그인</a>
+      </div>
+    </nav>
+    {% bootstrap_javascript %}
+  </body>
+  {% block content %} {% endblock content %}
+</html>
