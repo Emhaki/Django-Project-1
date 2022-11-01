@@ -7,3 +7,5 @@ app_name="accounts"
 urlpatterns = [
     path('signup/', views.create, name="create") 
 ] 
+
+
