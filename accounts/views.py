@@ -8,7 +8,6 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 
 
-
 def create(request):
     if request.method == "POST":
         form = CustomUserCreationForm(request.POST)
@@ -53,10 +52,21 @@ def follow(request, pk):
         user.followers.add(request.user)
     return redirect("accounts:detail", pk)
 
-def detail(request,user_pk):
-    user= get_user_model().objects.get(pk=user_pk)
-    context={
-        'user':user
-    }
-    return render(request, 'accounts.detail.html', context)
 
+def detail(request, pk):
+    user = get_user_model().objects.get(pk=pk)
+    context = {"user": user}
+    return render(request, "accounts/detail.html", context)
+
+
+@login_required
+def update(request):
+    if request.method == "POST":
+        form = CustomUserChangeForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect("accounts:detail", request.user.pk)
+    else:
+        form = CustomUserChangeForm(instance=request.user)
+    context = {"form": form}
+    return render(request, "accounts/update.html", context)
