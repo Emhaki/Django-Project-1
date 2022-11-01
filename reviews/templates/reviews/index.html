@@ -5,17 +5,41 @@
 {% block content %}
 <h1>여기가 홈 입니다!</h1>
 <div style="height:200px;">방지</div>
+<div class="text-center">
+  <a href="{% url 'reviews:store' %}">[관리자]가게 생성</a>
+</div>
 {% for store in stores %}
-  <h3>가게 이름 :
-    {{store.store_name}}</h3>
+  <a href="" class="text-dark"style='text-decoration:none;'>
+    <div class="container">
+      <div class="row row-cols-1 row-cols-md-2 g-4">
+        <div class="col">
+          <div class="card d-flex">
+            <img src="..." class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">{{store.store_name}}</h5>
+              <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+            </div>
+            <div class="d-flex justify-content-end">
+              {{store.created_at}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </a>
+  <div class="text-center mb-4">
+    {{store.address}}
+    {{store.phone_num}}
+    {{store.menu}}
+    
+    {{store.image}}
+  </div>
   {% for menu in store.menu.all %}
     <p>{{menu.menu_name}}</p>
   {% endfor %}
 {% endfor %}
 {% comment %} 임시 {% endcomment %}
-<div class="text-center mt-5" style="height:1000px;">
-  <a href="{% url 'reviews:store' %}">[관리자]가게 생성</a>
-</div>
+
 
 
 
