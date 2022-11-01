@@ -52,12 +52,12 @@ def follow(request, pk):
         user.followers.add(request.user)
     return redirect("accounts:detail", pk)
 
-
-def detail(request, pk):
-    user = get_user_model().objects.get(pk=pk)
-    context = {"user": user}
-    return render(request, "accounts/detail.html", context)
-
+def detail(request,user_pk):
+    user= get_user_model().objects.get(pk=user_pk)
+    context={
+        'user':user
+    }
+    return render(request, 'accounts/detail.html', context)
 
 @login_required
 def update(request):
