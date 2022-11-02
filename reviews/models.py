@@ -28,9 +28,9 @@ class Review(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     grade = models.IntegerField(
         "숫자",
-        default=0,
-        help_text="0~5사이 값으로 입력하세요",
-        validators=[MinValueValidator(0), MaxValueValidator(5)],
+        default=1,
+        help_text="1~5사이 값으로 입력하세요",
+        validators=[MinValueValidator(1), MaxValueValidator(5)],
     )
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     store = models.ForeignKey(Store, on_delete=models.CASCADE)

@@ -4,8 +4,48 @@
 
 {% block content %}
 <div style="height:200px;">방지</div>
-<div class="text-center">
-  {{ store.store_name }}
+<div class="container p-5">
+  <div class="row">
+    <div class="col-8 fs-3">
+      {{ store.store_name }} / 유저 리뷰점수
+    </div>
+    <div class="col-4 p-0">
+      <a href="{% url 'reviews:review_create' store.pk %}" class="btn btn-dark">
+        리뷰 쓰기
+      </a>
+      <a href="" class="btn btn-warning">찜하기</a>
+    </div>
+  </div>
+    <div class=""> {{ store.address }} </div>
+    <div class=""> {{ store.phone_num }} </div>
+    <div class=""> 음식종류: {{ store.menu }} </div>
 </div>
+
+
+
+
+{% comment %} <div> {{store.store_name}}의 리뷰 ({{ reveiws.count }})</div>
+{% for review in reviews %}
+<div>
+  {{ review.content|truncatewords:10 }}
+  <div>
+    {% if review.grade == 5 %}
+      {{ review.grade }} 😍 매우 맛있어요
+    {% elif review.grade == 4 %}
+      {{ review.grade }} 😊 맛있어요
+    {% elif review.grade == 3 %}
+      {{ review.grade }} 😐 괜찮아요
+    {% elif review.grade == 2 %}
+      {{ review.grade }} 😔 별로에요
+    {% elif review.grade == 1 %}
+      {{ review.grade }} 🤮 토나와요
+    {% endif %}
+  </div>
+  <div> 
+    {{ review.created_at|date: "o-m-d D"}} {{review.created_at|time:"H:i"}} 
+  </div>
+</div>
+<hr>
+{% endfor %} {% endcomment %}
 
 {% endblock content %}
