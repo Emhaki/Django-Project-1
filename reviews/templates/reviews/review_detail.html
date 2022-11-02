@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+{% load static %}
+
+{% block content %}
+  <div class="container">
+    <p>
+      아직 윗부분이
+    </p>
+    <p>
+      안보여 ㅜㅠㅜㅠ
+    </p>
+    <h3>작성자 :
+      {{ review.user.username }}</h3>
+    <p>별점 :
+      {{ review.grade }}</p>
+    <div class="row justify-content-between">
+      <div class="">
+        <p>{{review.updated_at|date:'Y-m-d a f'}}</p>
+      </div>
+      <form action="{% url 'reviews:review_delete' store.pk review.pk %}" method="POST" class="">
+        {% csrf_token %}
+        <a href="{% url 'reviews:review_update' review.pk %}" class="btn btn-outline-primary">수정</a>
+        <input class="btn btn-outline-danger" type="submit" value="삭제">
+        <a href="{% url 'reviews:store_detail' store.pk %}" class="btn btn-outline-secondary">뒤로</a>
+      </form>
+    </div>
+    <p class="my-3">
+      내용 :
+      {{ review.content }}
+    </p>
+    {% if review.image %}
+      <img src="{{ review.image.url }}" alt="{{review.image}}" width="250" height="180">
+    {% else %}
+      <img src="" alt="">
+    {% endif %}
+
+  </div>
+
+{% endblock content %}
