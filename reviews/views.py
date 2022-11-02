@@ -37,7 +37,7 @@ def store_detail(request, store_pk):
     store = Store.objects.get(pk=store_pk)
     reviews = store.review_set.all()
 
-    if request.POST.get('grade-5'):
+    if request.GET.get('grade-5'):
       reviews = Review.objects.filter(grade=5)
     elif request.POST.get('grade-4'):
       reviews = Review.objects.filter(grade=4)

@@ -21,19 +21,18 @@
     <div class=""> 음식종류: {{ store.menu }} </div>
 </div>
 
-
 <div class="container d-flex justify-content-between"> 
   <form action="{% url 'reviews:store_detail' store.pk %}" method="POST">
     {% csrf_token %}
     <button name="reset" type="submit" value="reset">
-      {{store.store_name}}의 리뷰 <span class="text-secondary">({{ reviews.count }})</span>
+      {{store.store_name}}의 리뷰 <span class="text-secondary">({{ reviews_all.count }})</span>
     </button>
   </form>
   <div>
   </div>
   <div>
     <div class="d-flex">
-      <form action="{% url 'reviews:store_detail' store.pk %}" method="POST">
+      <form id='grade-5'action="{% url 'reviews:store_detail' store.pk %}" method="POST" data-store-id="{{ store.pk }}">
         {% csrf_token %}
         <button name="grade-5" type="submit" value="grade-5">
           매우 맛있다 {{ review_5 }}
@@ -70,7 +69,7 @@
 <div class="container">
   {% comment %} 링크시작 {% endcomment %}
   <a href="{% url 'reviews:review_detail' store.pk review.pk %}" class="text-dark"style="text-decoration:none">
-    <div class="d-flex justify-content-between mt-3">
+    <div id="comments" class="d-flex justify-content-between mt-3">
       <div>
       <span class="fs-5 fw-bold">{{ user }}</span> {{ review.content|truncatewords:10 }}
       </div>
