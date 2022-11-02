@@ -1,22 +1,23 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import CustomUserCreationForm, CustomUserChangeForm
+from .forms import CustomUserCreationForm, CustomUserChangeForm,ProfileForm
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
-
+from .models import Profile
 
 def create(request):
     if request.method == "POST":
         form = CustomUserCreationForm(request.POST)
+        profile = Profile()
         if form.is_valid():
             user = form.save()
-
+            profile.user = user  
+            profile.save()  
             auth_login(request, user)
             return redirect("accounts:login")
-
     else:
         form = CustomUserCreationForm()
     context = {"form": form}
@@ -52,8 +53,8 @@ def follow(request, pk):
         user.followers.add(request.user)
     return redirect("accounts:detail", pk)
 
-def detail(request,user_pk):
-    user= get_user_model().objects.get(pk=user_pk)
+def detail(request,pk):
+    user= get_user_model().objects.get(pk=pk)
     context={
         'user':user
     }
@@ -70,3 +71,33 @@ def update(request):
         form = CustomUserChangeForm(instance=request.user)
     context = {"form": form}
     return render(request, "accounts/update.html", context)
+
+@login_required
+def profile(request):#프로필 
+    user = request.user
+    reviews = user.review_set.all()
+    comments = user.comment_set.all()
+    profile = user.profile_set.all()[0]
+    context = {
+        "reviews": reviews,
+        "comments": comments,
+        "profile": profile,
+    }
+    return render(request, "accounts/profile.html", context)
+
+
+@login_required
+def profile_update(request):#프로필 업데이트
+    user = get_user_model().objects.get(pk=request.user.pk) 
+    current_user = user.profile_set.all()[0]  
+    if request.method == "POST":
+        form = ProfileForm(request.POST, request.FILES, instance=current_user)
+        if form.is_valid():
+            form.save()
+            return redirect("accounts:profile")
+    else:
+        form = ProfileForm(instance=current_user)
+    context = {
+        "profile_form": form,
+    }
+    return render(request, "accounts/profile_update.html", context)
