@@ -7,7 +7,7 @@
 <div class="container p-5">
   <div class="row">
     <div class="col-8 fs-3">
-      {{ store.store_name }} / 유저 리뷰점수
+      {{ store.store_name }} / <span class="text-warning">{{ review_ave }}</span>
     </div>
     <div class="col-4 p-0">
       <a href="{% url 'reviews:review_create' store.pk %}" class="btn btn-dark">
@@ -24,28 +24,79 @@
 
 
 
-{% comment %} <div> {{store.store_name}}의 리뷰 ({{ reveiws.count }})</div>
-{% for review in reviews %}
-<div>
-  {{ review.content|truncatewords:10 }}
+<div class="container d-flex justify-content-between"> 
+  <form action="{% url 'reviews:store_detail' store.pk %}" method="POST">
+    {% csrf_token %}
+    <button name="reset" type="submit" value="reset">
+      {{store.store_name}}의 리뷰 <span class="text-secondary">({{ reviews.count }})</span>
+    </button>
+  </form>
   <div>
-    {% if review.grade == 5 %}
-      {{ review.grade }} 😍 매우 맛있어요
-    {% elif review.grade == 4 %}
-      {{ review.grade }} 😊 맛있어요
-    {% elif review.grade == 3 %}
-      {{ review.grade }} 😐 괜찮아요
-    {% elif review.grade == 2 %}
-      {{ review.grade }} 😔 별로에요
-    {% elif review.grade == 1 %}
-      {{ review.grade }} 🤮 토나와요
-    {% endif %}
   </div>
-  <div> 
-    {{ review.created_at|date: "o-m-d D"}} {{review.created_at|time:"H:i"}} 
+  <div>
+    <div class="d-flex">
+      <form action="{% url 'reviews:store_detail' store.pk %}" method="POST">
+        {% csrf_token %}
+        <button name="grade-5" type="submit" value="grade-5">
+          매우 맛있다 {{ review_5 }}
+        </button>
+      </form>
+      <form action="{% url 'reviews:store_detail' store.pk %}" method="POST">
+        {% csrf_token %}
+        <button name="grade-4" type="submit" value="grade-4">
+          맛있다 {{ review_4 }}
+        </button>
+      </form>
+      <form action="{% url 'reviews:store_detail' store.pk %}" method="POST">
+        {% csrf_token %}
+        <button name="grade-3" type="submit" value="grade-3">
+          괜찮다 {{ review_3 }}
+        </button>
+      </form>
+      <form action="{% url 'reviews:store_detail' store.pk %}" method="POST">
+        {% csrf_token %}
+        <button name="grade-2" type="submit" value="grade-2">
+          별로다 {{ review_2 }}
+        </button>
+      </form>
+      <form action="{% url 'reviews:store_detail' store.pk %}" method="POST">
+        {% csrf_token %}
+        <button name="grade-1" type="submit" value="grade-1">
+          너무 별로다 {{ review_1 }}
+        </button>
+      </form>
+    </div>
   </div>
 </div>
-<hr>
-{% endfor %} {% endcomment %}
+{% for review in reviews %}
+<div class="container">
+  {% comment %} 링크시작 {% endcomment %}
+  <a href="{% url 'reviews:review_detail' store.pk review.pk %}" class="text-dark"style="text-decoration:none">
+    <div class="d-flex justify-content-between mt-3">
+      <div>
+      <span class="fs-5 fw-bold">{{ user }}</span> {{ review.content|truncatewords:10 }}
+      </div>
+      <div>
+        {% if review.grade == 5 %}
+          {{ review.grade }} 😍 매우 맛있어요
+        {% elif review.grade == 4 %}
+          {{ review.grade }} 😊 맛있어요
+        {% elif review.grade == 3 %}
+          {{ review.grade }} 😐 괜찮아요
+        {% elif review.grade == 2 %}
+          {{ review.grade }} 😔 별로에요
+        {% elif review.grade == 1 %}
+          {{ review.grade }} 🤮 토나와요
+        {% endif %}
+      </div>
+    </div>
+    <div class='d-flex justify-content-end mt-2'> 
+      {{ review.created_at|date:"o-m-d D"}} {{review.created_at|time:"H:i"}} 
+    </div>
+  </a>
+  {% comment %} 링크 끝 {% endcomment %}
+  <hr>
+</div>
+{% endfor %}
 
 {% endblock content %}

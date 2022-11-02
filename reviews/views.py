@@ -2,8 +2,10 @@ from django.shortcuts import render, redirect
 from reviews.forms import ReviewForm
 from django.shortcuts import redirect, render
 from .models import Store, Review
-from .forms import StoreForm
+from .forms import StoreForm, CommentForm
 from django.contrib import messages
+
+from django.db.models import Avg
 
 # Create your views here.
 def index(request):
@@ -33,10 +35,44 @@ def store(request):
 
 def store_detail(request, store_pk):
     store = Store.objects.get(pk=store_pk)
+    reviews = Review.objects.all()
+
+    if request.POST.get('grade-5'):
+      reviews = Review.objects.filter(grade=5)
+      print('로직')
+    elif request.POST.get('grade-4'):
+      reviews = Review.objects.filter(grade=4)
+    elif request.POST.get('grade-3'):
+      reviews = Review.objects.filter(grade=3)
+    elif request.POST.get('grade-2'):
+      reviews = Review.objects.filter(grade=2)
+    elif request.POST.get('grade-1'):
+      reviews = Review.objects.filter(grade=1)
+    elif request.POST.get('reset'):
+      reviews = Review.objects.order_by("-pk")
+
+    print(reviews[0])
+    review_5 = Review.objects.filter(grade=5).count()
+    review_4 = Review.objects.filter(grade=4).count()
+    review_3 = Review.objects.filter(grade=3).count()
+    review_2 = Review.objects.filter(grade=2).count()
+    review_1 = Review.objects.filter(grade=1).count()
+
+    ave = Review.objects.aggregate(Avg('grade'))
+
+    # round(값, 표시하고 싶은 자리수)
+    review_ave = round(ave['grade__avg'], 2)
+
     context = {
         "store": store,
-        "reviews":store.review_set.all()
-
+        # "reviews":store.review_set.order_by("-pk"),
+        "reviews": reviews,
+        "review_5": review_5,
+        "review_4": review_4,
+        "review_3": review_3,
+        "review_2": review_2,
+        "review_1": review_1,
+        "review_ave": review_ave,
     }
     return render(request, "reviews/store_detail.html", context)
 
@@ -93,7 +129,6 @@ def review_update(request, review_pk):
         context = {
             "review_form": review_form,
         }
-        print("여기 옴")
         return render(request, "reviews/review_form.html", context)
     else:
         messages.warning(request, "작성자만 수정할 수 있습니다.")
