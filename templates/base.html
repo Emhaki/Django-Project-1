@@ -19,7 +19,7 @@
     <nav class="navbar fixed-top" style="background-color: #ffba08;">
       <div class="container">
           <div class="col-4">
-            <a class="navbar-brand fw-bold fs-4" href="#">맛짱</a>
+            <a class="navbar-brand fw-bold fs-4" href="{% url 'reviews:index' %}">맛짱</a>
           </div>
           <form class="d-flex" role="search">
               <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -30,17 +30,21 @@
             <a class="navbar-brand fw-bold" href="#">가격대별</a>
             </div>
           </div>
+          <div class="col-2">
           <div class="nav-item dropdown user-menu-parent " >
+            {% if request.user.is_authenticated %}
+            <a aria-expanded="false" class="nav-link dropdown-toggle user-menu-link loggedin" href="#" data-bs-toggle="dropdown" aria-haspopup="true" style="color: #ffba08;" >
+            <img src="{{ profile.image.url }}" alt="" style="width: 40; height: 40px; border-radius: 32px">
+            {% else %}
             <a aria-expanded="false" class="nav-link dropdown-toggle user-menu-link loggedin" href="#" data-bs-toggle="dropdown" aria-haspopup="true" style="color: #ffba08;" >
               <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16" style="color: #000000;">
                 <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
                 <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
               </svg>
-            
+              {% endif %}
               {% if request.user.is_authenticated %}
               <span>
-                <a class="text-decoration: none" href="{% url 'accounts:detail' user.pk %}">{{ request.user }}</a>
-                <b class="">님,환영합니다!</b>
+                <span class="text-decoration: none" style="color: #000000;">{{ request.user }}</span>
               </span>
               {% else %}
               <span class="text-decoration: none" style="color: #000000;">로그인이 필요합니다</span>
@@ -48,8 +52,10 @@
             </a>
             <ul class="dropdown-menu user-dropdown-menu right">
               {% if request.user.is_authenticated %}
+              <li><a class="navbar-brand fw-bold" href="{% url 'accounts:detail' user.pk %}">회원정보</a></li>
+              <li><a class="navbar-brand fw-bold" href="{% url 'accounts:update' %}">회원정보수정</a></li>
+              <li><a class="navbar-brand fw-bold" href="{% url 'accounts:profile' %}">프로필</a></li>
               <li><a class="navbar-brand fw-bold" href="{% url 'accounts:logout' %}">로그아웃</a></li>
-                <li><a class="navbar-brand fw-bold" href="{% url 'accounts:update' %}">회원정보수정</a></li>
               <div class="d-flex" style="align-items:center">
               {% else %}
               <li><a class="navbar-brand fw-bold" href="{% url 'accounts:login' %}">로그인</a></li>
@@ -58,6 +64,7 @@
             </ul>
           </div>
       </div>
+    </div>
     </nav>
     {% block content %} {% endblock content %}
     {% bootstrap_javascript %}
