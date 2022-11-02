@@ -19,9 +19,20 @@ urlpatterns = [
         name="review_delete",
     ),
     path(
-        "<int:review_pk>/review_detail/review_update/",
+        "<int:store_pk>/<int:review_pk>/review_detail/review_update/",
         views.review_update,
         name="review_update",
     ),
+
     path('search/', views.search, name='search'),
+    path(
+        "<int:store_pk>/<int:review_pk>/review_detail/comment/",
+        views.comment_create,
+        name="comment_create",
+    ),
+    path(
+        "<int:store_pk>/<int:review_pk>/review_detail/comment/<int:comment_pk>/comment_delete",
+        views.comment_delete,
+        name="comment_delete",
+    ),
 ]

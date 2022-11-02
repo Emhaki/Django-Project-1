@@ -4,6 +4,7 @@
 
 {% block content %}
   <div class="container">
+
     <p>
       아직 윗부분이
     </p>
@@ -18,9 +19,9 @@
       <div class="">
         <p>{{review.updated_at|date:'Y-m-d a f'}}</p>
       </div>
-      <form action="{% url 'reviews:review_delete' store.pk review.pk %}" method="POST" class="">
+      <form action="{% url 'reviews:review_delete' store.pk review.pk %}" method="POST">
         {% csrf_token %}
-        <a href="{% url 'reviews:review_update' review.pk %}" class="btn btn-outline-primary" method="POST">수정</a>
+        <a href="{% url 'reviews:review_update' store.pk review.pk %}" class="btn btn-outline-primary" method="POST">수정</a>
         <input class="btn btn-outline-danger" type="submit" value="삭제">
         <a href="{% url 'reviews:store_detail' store.pk %}" class="btn btn-outline-secondary">뒤로</a>
       </form>
@@ -34,6 +35,30 @@
     {% else %}
       <img src="" alt="">
     {% endif %}
+    {% if request.user.is_authenticated %}
+      <div class='my-3 inline'>
+        <form id="comment-form" action="{% url 'reviews:comment_create' store.pk review.pk %}" method="POST" class="border border-5 rounded p-3">
+          {% csrf_token %}
+          {% bootstrap_form comment_form %}
+          <div class="text-end"><input class="btn btn-primary" type="submit" value="댓글 작성"></div>
+        </form>
+      </div>
+    {% endif %}
+
+    {% for comment in comments %}
+      <div class="d-flex px-5" style="height: 3rem;">
+        <div class="col-2 align-self-center fs-7">작성자 :
+          {{comment.user.username}}</div>
+        <div class="col-2 align-self-center fs-7">내용 :
+          {{comment.content}}</div>
+        {% if request.user == comment.user %}
+          <form action="{% url 'reviews:comment_delete' store.pk review.pk comment.pk %}" method="POST" class="align-self-center">
+            {% csrf_token %}
+            <input class="" type="submit" value="삭제">
+          </form>
+        {% endif %}
+      </div>
+    {% endfor %}
 
   </div>
 
