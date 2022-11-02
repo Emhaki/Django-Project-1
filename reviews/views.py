@@ -52,9 +52,9 @@ def review_create(request, store_pk):
             review.save()
             return redirect("reviews:store_detail", store.pk)
     else:
-        form = ReviewForm()
+        review_form = ReviewForm()
     context = {
-        "form": form,
+        "review_form": review_form,
     }
     return render(request, "reviews/review_form.html", context)
 
@@ -93,6 +93,7 @@ def review_update(request, review_pk):
         context = {
             "review_form": review_form,
         }
+        print("여기 옴")
         return render(request, "reviews/review_form.html", context)
     else:
         messages.warning(request, "작성자만 수정할 수 있습니다.")

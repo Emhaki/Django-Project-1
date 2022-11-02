@@ -20,7 +20,7 @@
       </div>
       <form action="{% url 'reviews:review_delete' store.pk review.pk %}" method="POST" class="">
         {% csrf_token %}
-        <a href="{% url 'reviews:review_update' review.pk %}" class="btn btn-outline-primary">수정</a>
+        <a href="{% url 'reviews:review_update' review.pk %}" class="btn btn-outline-primary" method="POST">수정</a>
         <input class="btn btn-outline-danger" type="submit" value="삭제">
         <a href="{% url 'reviews:store_detail' store.pk %}" class="btn btn-outline-secondary">뒤로</a>
       </form>
