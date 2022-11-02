@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+{% block content %}
+
+  {% if not search %}
+    <h1 class="position-absolute top-50 start-0 translate-middle-y">검색 없음</h1>
+  {% else %}
+    {% for i in search.all %}
+      <p class="position-absolute top-50 start-0 translate-middle-y">{{ i.store_name }}</p>
+    {% endfor %}
+  {% endif %}
+{% endblock content %}

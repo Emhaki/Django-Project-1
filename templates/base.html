@@ -20,10 +20,11 @@
       <div class="container">
           <div class="col-4">
             <a class="navbar-brand fw-bold fs-4" href="{% url 'reviews:index' %}">맛짱</a>
-          </div>
-          <form class="d-flex" role="search">
-              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-              <button class="btn btn-outline-dark" type="submit">Search</button>
+          </div> 
+          <form class="d-flex" role="search" action="{% url 'reviews:search' %}" method="POST">
+            {% csrf_token %}
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="q" value="{{q}}">
+            <button class="btn btn-outline-dark" type="submit">Search</button>
           </form>
           <div class="col-4">
             <a class="navbar-brand fw-bold" href="#">맛집리스트</a>

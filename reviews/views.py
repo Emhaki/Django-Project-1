@@ -137,6 +137,14 @@ def review_update(request, store_pk, review_pk):
         messages.warning(request, "작성자만 수정할 수 있습니다.")
         return redirect("articles:detail", review.pk)
 
+def search(request):
+    search= Store.objects.all().order_by('-pk')
+    q = request.POST.get('q',"")
+    if q:
+        search = search.filter(store_name__icontains=q)
+        return render(request, 'reviews/search.html',{'search':search, 'q':q})
+    else:
+        return render(request, 'reviews/search.html')
 
 def comment_create(request, store_pk, review_pk):
     review = Review.objects.get(pk=review_pk)
@@ -158,3 +166,4 @@ def comment_delete(request, store_pk, review_pk, comment_pk):
             comment.delete()
             return redirect("reviews:review_detail", store_pk, review_pk)
     return redirect("reviews:review_detail", store_pk, review_pk)
+

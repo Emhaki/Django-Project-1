@@ -23,11 +23,8 @@ urlpatterns = [
         views.review_update,
         name="review_update",
     ),
-    path(
-        "<int:store_pk>/<int:review_pk>/review_detail/comment/",
-        views.comment_create,
-        name="comment_create",
-    ),
+
+    path('search/', views.search, name='search'),
     path(
         "<int:store_pk>/<int:review_pk>/review_detail/comment/",
         views.comment_create,
