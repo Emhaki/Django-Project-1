@@ -34,7 +34,9 @@
           <div class="nav-item dropdown user-menu-parent " >
             {% if request.user.is_authenticated %}
             <a aria-expanded="false" class="nav-link dropdown-toggle user-menu-link loggedin" href="#" data-bs-toggle="dropdown" aria-haspopup="true" style="color: #ffba08;" >
-            <img src="{{ profile.image.url }}" alt="" style="width: 40; height: 40px; border-radius: 32px">
+              {% for i in user.profile_set.all %}
+            <img src="{{ i.image.url }}" alt="" style="width: 40px; height: 40px; border-radius: 50px;">
+            {% endfor %}
             {% else %}
             <a aria-expanded="false" class="nav-link dropdown-toggle user-menu-link loggedin" href="#" data-bs-toggle="dropdown" aria-haspopup="true" style="color: #ffba08;" >
               <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16" style="color: #000000;">
