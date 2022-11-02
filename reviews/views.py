@@ -35,7 +35,8 @@ def store_detail(request, store_pk):
     store = Store.objects.get(pk=store_pk)
     context = {
         "store": store,
-        "reviews": store.review_set.all(),
+        "reviews":store.review_set.all()
+
     }
     return render(request, "reviews/store_detail.html", context)
 
