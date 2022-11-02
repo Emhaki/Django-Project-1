@@ -98,3 +98,11 @@ def review_update(request, review_pk):
     else:
         messages.warning(request, "작성자만 수정할 수 있습니다.")
         return redirect("articles:detail", review.pk)
+def search(request):
+    search= Store.objects.all().order_by('-pk')
+    q = request.POST.get('q',"")
+    if q:
+        search = search.filter(store_name__icontains=q)
+        return render(request, 'reviews/search.html',{'search':search, 'q':q})
+    else:
+        return render(request, 'reviews/search.html')

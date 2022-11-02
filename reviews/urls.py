@@ -23,4 +23,5 @@ urlpatterns = [
         views.review_update,
         name="review_update",
     ),
+    path('search/', views.search, name='search'),
 ]
