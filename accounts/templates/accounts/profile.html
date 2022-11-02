@@ -1,9 +1,10 @@
 {% extends 'base.html' %}
 {% load django_bootstrap5 %}
+{% load static %}
 
 {% block content %}
-<br>
-<br>
+  <br>
+  <br>
   <h3>{{user.username}}
     My page</h3>
   {% if profile.image %}

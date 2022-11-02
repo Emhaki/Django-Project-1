@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import CustomUserCreationForm, CustomUserChangeForm,ProfileForm
+from .forms import CustomUserCreationForm, CustomUserChangeForm, ProfileForm
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth import login as auth_login
@@ -8,17 +8,17 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from .models import Profile
 
+
 def create(request):
     if request.method == "POST":
         form = CustomUserCreationForm(request.POST)
         profile = Profile()
         if form.is_valid():
             user = form.save()
-            profile.user = user  
-            profile.save()  
+            profile.user = user
+            profile.save()
             auth_login(request, user)
             return redirect("reviews:index")
-
 
     else:
         form = CustomUserCreationForm()
@@ -56,12 +56,10 @@ def follow(request, pk):
     return redirect("accounts:detail", pk)
 
 
-def detail(request,pk):
-    user= get_user_model().objects.get(pk=pk)
-    context={
-        'user':user
-    }
-    return render(request, 'accounts/detail.html', context)
+def detail(request, pk):
+    user = get_user_model().objects.get(pk=pk)
+    context = {"user": user}
+    return render(request, "accounts/detail.html", context)
 
 
 @login_required
@@ -76,8 +74,9 @@ def update(request):
     context = {"form": form}
     return render(request, "accounts/update.html", context)
 
+
 @login_required
-def profile(request):#프로필 
+def profile(request):  # 프로필
     user = request.user
     reviews = user.review_set.all()
     comments = user.comment_set.all()
@@ -91,9 +90,9 @@ def profile(request):#프로필
 
 
 @login_required
-def profile_update(request):#프로필 업데이트
-    user = get_user_model().objects.get(pk=request.user.pk) 
-    current_user = user.profile_set.all()[0]  
+def profile_update(request):  # 프로필 업데이트
+    user = get_user_model().objects.get(pk=request.user.pk)
+    current_user = user.profile_set.all()[0]
     if request.method == "POST":
         form = ProfileForm(request.POST, request.FILES, instance=current_user)
         if form.is_valid():
