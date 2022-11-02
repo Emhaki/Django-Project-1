@@ -28,5 +28,8 @@
     {% endif %}
   {% endif %}
   <h4>작성한 리뷰</h4>
-  {% comment %} <p>{{ user.reviews_set.count }}개를 작성하였습니다.</p> {% endcomment %}
+  <p>{{ user.review_set.count }}개를 작성하였습니다.</p>
+  {% for i in user.review_set.all %}
+    <p>리뷰:{{ i.content }}</p>
+  {% endfor %}
 {% endblock content %}
