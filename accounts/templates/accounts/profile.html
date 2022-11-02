@@ -7,11 +7,9 @@
   <br>
   <h3>{{user.username}}
     My page</h3>
-  {% if profile.image %}
-    <img src="{{ profile.image.url }}" alt="" style="width: 100px; height: 100px; border-radius: 500px">
-  {% else %}
-    <img src="" class="" style="width: 100px; height: 100px;">
-  {% endif %}
+    {% for i in user.profile_set.all %}
+    <img src="{{ i.image.url }}" alt="" style="width: 100px; height: 100px; border-radius: 500px">
+   {% endfor %}
   <p>{{user.email}}
     <a href="{% url 'accounts:profile_update' %}" class='btn btn-outline-success ms-5'>프로필 수정</a>
   </p>

@@ -14,8 +14,9 @@ class User(AbstractUser):
 class Profile(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     image = ProcessedImageField(
+        default="noimg.jpg",
         blank=True,
-        processors=[Thumbnail(200, 300)],
+        processors=[Thumbnail(300, 300)],
         format="JPEG",
         options={"quality": 50},
     )
