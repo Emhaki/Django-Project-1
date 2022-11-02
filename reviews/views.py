@@ -35,11 +35,10 @@ def store(request):
 
 def store_detail(request, store_pk):
     store = Store.objects.get(pk=store_pk)
-    reviews = Review.objects.all()
+    reviews = store.review_set.all()
 
     if request.POST.get('grade-5'):
       reviews = Review.objects.filter(grade=5)
-      print('로직')
     elif request.POST.get('grade-4'):
       reviews = Review.objects.filter(grade=4)
     elif request.POST.get('grade-3'):
@@ -51,21 +50,25 @@ def store_detail(request, store_pk):
     elif request.POST.get('reset'):
       reviews = Review.objects.order_by("-pk")
 
-    print(reviews[0])
     review_5 = Review.objects.filter(grade=5).count()
     review_4 = Review.objects.filter(grade=4).count()
     review_3 = Review.objects.filter(grade=3).count()
     review_2 = Review.objects.filter(grade=2).count()
     review_1 = Review.objects.filter(grade=1).count()
 
-    ave = Review.objects.aggregate(Avg('grade'))
+    review_ave = 0
 
-    # round(값, 표시하고 싶은 자리수)
-    review_ave = round(ave['grade__avg'], 2)
+    if review_ave == 0:
+      review_ave = "평가 없음"
+    
+    if reviews == True:
+      ave = Review.objects.aggregate(Avg('grade'))
+
+      # round(값, 표시하고 싶은 자리수)
+      review_ave = round(ave['grade__avg'], 2)
 
     context = {
         "store": store,
-        # "reviews":store.review_set.order_by("-pk"),
         "reviews": reviews,
         "review_5": review_5,
         "review_4": review_4,
@@ -73,7 +76,6 @@ def store_detail(request, store_pk):
         "review_2": review_2,
         "review_1": review_1,
         "review_ave": review_ave,
-        "reviews": store.review_set.all(),
     }
     return render(request, "reviews/store_detail.html", context)
 
