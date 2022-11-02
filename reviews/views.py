@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
-from reviews.forms import ReviewForm
+from reviews.forms import ReviewForm, CommentForm
 from django.shortcuts import redirect, render
-from .models import Store, Review
+from .models import Store, Review, Comment
 from .forms import StoreForm
 from django.contrib import messages
 
@@ -35,8 +35,7 @@ def store_detail(request, store_pk):
     store = Store.objects.get(pk=store_pk)
     context = {
         "store": store,
-        "reviews":store.review_set.all()
-
+        "reviews": store.review_set.all(),
     }
     return render(request, "reviews/store_detail.html", context)
 
@@ -65,6 +64,8 @@ def review_detail(request, store_pk, review_pk):
     context = {
         "review": review,
         "store": store,
+        "comment_form": CommentForm(),
+        "comments": review.comment_set.all(),
     }
     return render(request, "reviews/review_detail.html", context)
 
@@ -78,7 +79,7 @@ def review_delete(request, store_pk, review_pk):
     return redirect("reviews:store_detail", store_pk)
 
 
-def review_update(request, review_pk):
+def review_update(request, store_pk, review_pk):
     review = Review.objects.get(pk=review_pk)
     if request.user == review.user:
         if request.method == "POST":
@@ -87,7 +88,7 @@ def review_update(request, review_pk):
                 form = review_form.save(commit=False)
                 form.user = request.user
                 form.save()
-                return redirect("reviews:review_detail", review_pk)
+                return redirect("reviews:review_detail", store_pk, review_pk)
         else:
             review_form = ReviewForm(instance=review)
         context = {
@@ -98,3 +99,25 @@ def review_update(request, review_pk):
     else:
         messages.warning(request, "작성자만 수정할 수 있습니다.")
         return redirect("articles:detail", review.pk)
+
+
+def comment_create(request, store_pk, review_pk):
+    review = Review.objects.get(pk=review_pk)
+    if request.method == "POST":
+        comment_form = CommentForm(request.POST)
+        if comment_form.is_valid():
+            comment = comment_form.save(commit=False)
+            comment.review = review
+            comment.user = request.user
+            comment.save()
+            return redirect("reviews:review_detail", store_pk, review_pk)
+    return redirect("reviews:review_detail", store_pk, review_pk)
+
+
+def comment_delete(request, store_pk, review_pk, comment_pk):
+    comment = Comment.objects.get(pk=comment_pk)
+    if request.user == comment.user:
+        if request.method == "POST":
+            comment.delete()
+            return redirect("reviews:review_detail", store_pk, review_pk)
+    return redirect("reviews:review_detail", store_pk, review_pk)
