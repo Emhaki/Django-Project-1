@@ -35,6 +35,7 @@ def store(request):
 
 def store_detail(request, store_pk):
     store = Store.objects.get(pk=store_pk)
+    reviews_all = store.review_set.all()
     reviews = store.review_set.all()
 
     if request.POST.get('grade-5'):
@@ -70,6 +71,7 @@ def store_detail(request, store_pk):
     context = {
         "store": store,
         "reviews": reviews,
+        "reviews_all": reviews_all,
         "review_5": review_5,
         "review_4": review_4,
         "review_3": review_3,
@@ -169,3 +171,28 @@ def comment_delete(request, store_pk, review_pk, comment_pk):
             return redirect("reviews:review_detail", store_pk, review_pk)
     return redirect("reviews:review_detail", store_pk, review_pk)
 
+
+
+# 시험용
+
+# import os
+# import sys
+# import urllib.request
+# client_id = "YOUR_CLIENT_ID"
+# client_secret = "YOUR_CLIENT_SECRET"
+# encText = urllib.parse.quote("검색할 단어")
+# url = "https://openapi.naver.com/v1/search/blog?query=" + encText # JSON 결과
+# # url = "https://openapi.naver.com/v1/search/blog.xml?query=" + encText # XML 결과
+# request = urllib.request.Request(url)
+# request.add_header("X-Naver-Client-Id",fnOyCiACehruwZRDeqiq)
+# request.add_header("X-Naver-Client-Secret",MQpnJIEaDE)
+
+# response = urllib.request.urlopen(request)
+# rescode = response.getcode()
+
+# 내용 출력
+# if(rescode==200):
+#     response_body = response.read()
+#     print(response_body.decode('utf-8'))
+# else:
+#     print("Error Code:" + rescode)
