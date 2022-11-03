@@ -71,7 +71,7 @@ def store_detail(request, store_pk):
     if review_ave == 0:
         review_ave = "평가 없음"
 
-    if reviews == True:
+    if reviews_.count() > 0:
         ave = Review.objects.aggregate(Avg("grade"))
 
         # round(값, 표시하고 싶은 자리수)
