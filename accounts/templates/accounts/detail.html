@@ -30,6 +30,10 @@
   <h4>작성한 리뷰</h4>
   <p>{{ user.review_set.count }}개를 작성하였습니다.</p>
   {% for i in user.review_set.all %}
-    <p>리뷰:{{ i.content }}</p>
+    <a href="{% url 'reviews:store_detail' i.store.pk %}">가게이름:{{ i.store.store_name }}리뷰:{{ i.content }}</a>
+    <hr>
   {% endfor %}
+  <p>
+    <b>{{ user.comment_set.count }}개의 댓글이 있습니다.</b>
+  </p>
 {% endblock content %}

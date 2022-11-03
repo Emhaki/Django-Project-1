@@ -5,14 +5,19 @@ from .forms import StoreForm, CommentForm
 from .models import Store, Review, Comment
 from django.contrib import messages
 from django.http import JsonResponse, HttpResponse
+from django.core.paginator import Paginator
 from django.db.models import Avg
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def index(request):
     stores = Store.objects.all()
+    paginator = Paginator(stores, 1)  # Show 25 contacts per page.
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
     context = {
         "stores": stores,
+        "page_obj": page_obj,
     }
     return render(request, "reviews/index.html", context)
 
