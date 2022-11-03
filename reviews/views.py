@@ -45,6 +45,7 @@ def store(request):
 def store_detail(request, store_pk):
     store = get_object_or_404(Store, pk=store_pk)
     reviews = store.review_set.all()
+    reviews_ = store.review_set.all()
 
     if request.POST.get("grade-5"):
         reviews = Review.objects.filter(grade=5)
@@ -79,6 +80,7 @@ def store_detail(request, store_pk):
     context = {
         "store": store,
         "reviews": reviews,
+        "reviews_": reviews_,
         "review_5": review_5,
         "review_4": review_4,
         "review_3": review_3,

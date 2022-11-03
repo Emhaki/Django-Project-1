@@ -33,7 +33,7 @@
   <form action="{% url 'reviews:store_detail' store.pk %}" method="POST">
     {% csrf_token %}
     <button name="reset" type="submit" value="reset">
-      {{store.store_name}}의 리뷰 <span class="text-secondary">({{ reviews_all.count }})</span>
+      {{store.store_name}}의 리뷰 <span class="text-secondary">({{ reviews_.all.count }})</span>
     </button>
   </form>
   <div>
