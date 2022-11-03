@@ -84,7 +84,7 @@
         {% for i in user.profile_set.all %}
             <img src="{{ i.image.url }}" alt="" style="width: 40px; height: 40px; border-radius: 50px;">
             {% endfor %}
-        {{ user }}</span> {{ review.content|truncatewords:10 }}
+        {{ review.user.username }}</span> {{ review.content|truncatewords:10 }}
       </div>
       <div>
         {% if review.grade == 5 %}

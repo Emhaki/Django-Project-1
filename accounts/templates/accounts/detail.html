@@ -2,43 +2,128 @@
 {% load django_bootstrap5 %}
 
 {% block content %}
-  <h1>조회</h1>
-  {{ user.username}}
-  <p>팔로우{{ user.followings.count }}</p>
-  <p>팔로워{{ user.followers.count }}</p>
-  {% for i in user.followings.all %}
-    <p>팔로우 목록:{{ i }},</p>
-  {% endfor %}
-
-  {% for i in user.followers.all %}
-    <p>팔로워 목록:{{ i }},</p>
-  {% endfor %}
-  {% if request.user != user %}
-    <form action="{% url 'accounts:follow' user.pk %}" method="POST">
-      {% if request.user.is_authenticated %}
-        {% csrf_token %}
-        {% if request.user in user.followers.all %}
-          {%bootstrap_button button_type="submit" content="팔로우 취소"%}
-        {% else %}
-          {%bootstrap_button button_type="submit" content="팔로우"%}
-        {% endif %}
-      </form>
-    {% else %}
-      {%bootstrap_button button_type="submit" content="로그인 필요합니다."%}
-    {% endif %}
-  {% endif %}
-  <h4>작성한 리뷰</h4>
-  <p>{{ user.review_set.count }}개를 작성하였습니다.</p>
-  {% for i in user.review_set.all %}
-    <a class="text-dark" href="{% url 'reviews:store_detail' i.store.pk %}" style="text-decoration:none;">
-      <div class="container">
-        <div class="fs-3">{{ i.store.store_name }}</div>
-        <div>{{ i.content|truncatewords:10 }}</div>
-        <hr>
+  <h1 style="height:200px;">조회</h1>
+  <div class="container text-center" style="max-width:800px;">
+    <div class="row">
+      <div class="col-4 p-0">
+        {% for i in user.profile_set.all %}
+          <img style="width:200px; "src="{{ i.image.url }}" alt="" class="rounded-circle">
+        {% endfor %}
       </div>
-    </a>
-  {% endfor %}
-  <p>
-    <b>{{ user.comment_set.count }}개의 댓글이 있습니다.</b>
-  </p>
+      <div class="col-7 p-2">
+        <div class="d-flex justify-content-evenly">
+          <div class="col align-items-center fw-bold fs-4">
+            {{ user.username }}
+          </div>
+          <div class="col">
+            {% if request.user != user %}
+            <form action="{% url 'accounts:follow' user.pk %}" method="POST">
+            {% if request.user.is_authenticated %}
+              {% csrf_token %}
+              {% if request.user in user.followers.all %}
+                {%bootstrap_button button_type="submit" content="팔로우 취소"%}
+              {% else %}
+                {%bootstrap_button button_type="submit" content="팔로우"%}
+              {% endif %}
+                </form>
+              {% else %}
+                {%bootstrap_button button_type="submit" content="로그인 필요합니다."%}
+              {% endif %}
+            {% endif %}
+          </div>
+        </div>
+        <div class="d-flex justify-content-center align-items-center mt-5">
+          <div class="col">
+            리뷰글 {{ user.review_set.count }}
+          </div>
+          <div class="col">
+            댓글 {{ user.comment_set.count }}
+          </div>
+          <div class="col">
+            <div style="cursor:pointer" class="" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+              팔로우 {{ user.followings.count }}
+            </div>
+          </div>
+          <div class="col">
+            <div style="cursor:pointer" class="" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              팔로워 {{ user.followers.count }}
+            </div>
+          </div> 
+        </div>
+      </div>
+      {% comment %}  {% endcomment %}
+      <!-- Button trigger modal -->
+      
+
+      <!-- Modal -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">팔로워 목록</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              {% for i in user.followers.all %}
+                <div>{{ i }}</div>
+              {% endfor %}
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Modal2 -->
+      <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel2">팔로우 목록</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              {% for i in user.followings.all %}
+              <div>{{ i }}</div>
+              {% endfor %}
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {% comment %}  {% endcomment %}
+      
+    </div>
+  </div>
+  
+  <div class="fs-3 text-center my-5"><span class="fs-2 text-warning">{{ user.username }}</span>의 리뷰</div>
+  <div class="container mb-5">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 gap-5">
+    {% for i in user.review_set.all %}
+      <div class="card m-0" style="width: 18rem; min-height:150px; max-height:1000px;">
+        <a class="text-dark" href="{% url 'reviews:store_detail' i.store.pk %}" style="text-decoration:none;">
+          {% if i.image %}
+          <div class="d-flex justify-content-center mt-1">
+            <img src="{{ i.image.url }}" alt="" style="width: 200px; height: 200px; border-radius: 24px">
+          </div>
+            {% else %}
+          <div class="d-flex justify-content-center mt-1">
+            <img src="https://dummyimage.com/1200x960/000000/c4c4c4" class="" style="width: 100px; height: 100px; border-radius: 24px">
+          </div>
+          {% endif %}
+          <div class="card-body">
+            <div class="fs-3">{{ i.store.store_name }}</div>
+            <div>{{ i.content|truncatewords:10 }}</div>
+          </div>
+          <small class="fs-7 d-flex justify-content-end">
+            {{ i.created_at|date:"o-m-d D" }}
+          </small>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
 {% endblock content %}
