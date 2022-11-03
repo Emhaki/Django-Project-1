@@ -1,12 +1,13 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from reviews.forms import ReviewForm, CommentForm
 from django.shortcuts import redirect, render
 from .forms import StoreForm, CommentForm
 from .models import Store, Review, Comment
 from django.contrib import messages
+from django.http import JsonResponse, HttpResponse
 from django.core.paginator import Paginator
-
 from django.db.models import Avg
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def index(request):
@@ -170,6 +171,29 @@ def comment_create(request, store_pk, review_pk):
             comment.save()
             return redirect("reviews:review_detail", store_pk, review_pk)
     return redirect("reviews:review_detail", store_pk, review_pk)
+
+
+"""
+ def comment_create(request, store_pk, review_pk):
+    review = get_object_or_404(Review, pk=review_pk)
+    if request.method == "POST":
+        if request.user.is_authenticated:
+            comment_form = CommentForm(request.POST)
+            if comment_form.is_valid():
+                comment = comment_form.save(commit=False)
+                comment.review = review
+                comment.user = request.user
+                comment.save()
+                context = {
+                    "content": comment.content,
+                    "userName": comment.user.username,
+                }
+                return JsonResponse(context)
+        else:
+            return HttpResponse(status=403)
+    else:
+        return redirect("accounts:login")
+"""
 
 
 def comment_delete(request, store_pk, review_pk, comment_pk):
