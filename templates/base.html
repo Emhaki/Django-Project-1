@@ -39,7 +39,12 @@
           <a aria-expanded="false" class="nav-link dropdown-toggle user-menu-link loggedin" href="#"
             data-bs-toggle="dropdown" aria-haspopup="true" style="color: #ffba08;">
             {% for i in user.profile_set.all %}
+            {% if i.image %}
             <img src="{{ i.image.url }}" alt="" style="width: 40px; height: 40px; border-radius: 50px;">
+            {% else %}
+            <img src="https://dummyimage.com/1200x960/000000/c4c4c4" class=""
+              style="width: 40px; height: 40px; border-radius: 50px;">
+            {% endif %}
             {% endfor %}
             {% else %}
             <a aria-expanded="false" class="nav-link dropdown-toggle user-menu-link loggedin" href="#"
@@ -75,6 +80,10 @@
       </div>
     </div>
   </nav>
+  <br>
+  <br>
+  <br>
+  <br>
   {% block content %} {% endblock content %}
   {% bootstrap_javascript %}
 </body>
