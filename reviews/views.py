@@ -8,7 +8,7 @@ from django.http import JsonResponse, HttpResponse
 from django.core.paginator import Paginator
 from django.db.models import Avg
 from django.contrib.auth.decorators import login_required
-
+from datetime import date, datetime , timedelta
 # Create your views here.
 def index(request):
     stores = Store.objects.all()
@@ -87,7 +87,11 @@ def store_detail(request, store_pk):
         "review_1": review_1,
         "review_ave": review_ave,
     }
-    return render(request, "reviews/store_detail.html", context)
+    response = render(request, "reviews/store_detail.html", context)
+    store.hits +=1
+    store.save()
+
+    return response
 
 
 def review_create(request, store_pk):
