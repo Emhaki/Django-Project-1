@@ -20,6 +20,7 @@ class Store(models.Model):
         format="JPEG",
         options={"quality": 90},
     )
+    hits= models.PositiveIntegerField(default=0, verbose_name='조회수')
 
 
 class Review(models.Model):
