@@ -42,40 +42,44 @@ def store(request):
 def store_detail(request, store_pk):
     store = Store.objects.get(pk=store_pk)
     reviews = store.review_set.all()
+    reviews_grade = store.review_set.all()
+    reviews_all = store.review_set.all()
+
 
     if request.POST.get("grade-5"):
-        reviews = Review.objects.filter(grade=5)
+        reviews = store.review_set.filter(grade=5)
     elif request.POST.get("grade-4"):
-        reviews = Review.objects.filter(grade=4)
+        reviews = store.review_set.filter(grade=4)
     elif request.POST.get("grade-3"):
-        reviews = Review.objects.filter(grade=3)
+        reviews = store.review_set.filter(grade=3)
     elif request.POST.get("grade-2"):
-        reviews = Review.objects.filter(grade=2)
+        reviews = store.review_set.filter(grade=2)
     elif request.POST.get("grade-1"):
-        reviews = Review.objects.filter(grade=1)
+        reviews = store.review_set.filter(grade=1)
     elif request.POST.get("reset"):
-        reviews = Review.objects.order_by("-pk")
+        reviews = store.review_set.order_by("-pk")
 
-    review_5 = Review.objects.filter(grade=5).count()
-    review_4 = Review.objects.filter(grade=4).count()
-    review_3 = Review.objects.filter(grade=3).count()
-    review_2 = Review.objects.filter(grade=2).count()
-    review_1 = Review.objects.filter(grade=1).count()
+    review_5 = store.review_set.filter(grade=5).count()
+    review_4 = store.review_set.filter(grade=4).count()
+    review_3 = store.review_set.filter(grade=3).count()
+    review_2 = store.review_set.filter(grade=2).count()
+    review_1 = store.review_set.filter(grade=1).count()
 
     review_ave = 0
 
     if review_ave == 0:
         review_ave = "평가 없음"
 
-    if reviews == True:
-        ave = Review.objects.aggregate(Avg("grade"))
+    if reviews_grade.count() > 0:
+        ave = store.review_set.aggregate(Avg("grade"))
 
         # round(값, 표시하고 싶은 자리수)
         review_ave = round(ave["grade__avg"], 2)
 
     context = {
         "store": store,
-        "reviews": reviews,
+        "reviews": reviews.order_by('-pk'),
+        "reviews_all": reviews_all,
         "review_5": review_5,
         "review_4": review_4,
         "review_3": review_3,
