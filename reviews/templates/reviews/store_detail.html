@@ -8,6 +8,7 @@
   <div class="row">
     <div class="col-8 fs-3">
       {{ store.store_name }} / <span class="text-warning">{{ review_ave }}</span>
+      <p>조회수:{{ store.hits }}</p>
     </div>
     <div class="col-4 p-0">
       <a href="{% url 'reviews:review_create' store.pk %}" class="btn btn-dark">
