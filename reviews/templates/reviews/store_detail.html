@@ -29,6 +29,7 @@
     </button>
   </form>
   <div>
+
   </div>
   <div>
     <div class="d-flex">
@@ -71,7 +72,11 @@
   <a href="{% url 'reviews:review_detail' store.pk review.pk %}" class="text-dark"style="text-decoration:none">
     <div id="comments" class="d-flex justify-content-between mt-3">
       <div>
-      <span class="fs-5 fw-bold">{{ user }}</span> {{ review.content|truncatewords:10 }}
+      <span class="fs-5 fw-bold">
+        {% for i in user.profile_set.all %}
+            <img src="{{ i.image.url }}" alt="" style="width: 40px; height: 40px; border-radius: 50px;">
+            {% endfor %}
+        {{ user }}</span> {{ review.content|truncatewords:10 }}
       </div>
       <div>
         {% if review.grade == 5 %}

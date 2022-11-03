@@ -12,6 +12,9 @@
       안보여 ㅜㅠㅜㅠ
     </p>
     <h3>작성자 :
+      {% for i in user.profile_set.all %}
+            <img src="{{ i.image.url }}" alt="" style="width: 40px; height: 40px; border-radius: 50px;">
+            {% endfor %}
       {{ review.user.username }}</h3>
     <p>별점 :
       {{ review.grade }}</p>
@@ -50,6 +53,9 @@
     {% for comment in comments %}
       <div class="d-flex px-5" style="height: 3rem;">
         <div class="col-2 align-self-center fs-7">작성자 :
+          {% for i in user.profile_set.all %}
+            <img src="{{ i.image.url }}" alt="" style="width: 40px; height: 40px; border-radius: 50px;">
+            {% endfor %}
           {{comment.user.username}}</div>
         <div class="col-2 align-self-center fs-7">내용 :
           {{comment.content}}</div>
