@@ -5,7 +5,13 @@ from .models import Store, Review, Comment
 class StoreForm(forms.ModelForm):
     class Meta:
         model = Store
-        fields = "__all__"
+        fields = [
+            "store_name",
+            "address",
+            "phone_num",
+            "menu",
+            "image",
+        ]
 
 
 class ReviewForm(forms.ModelForm):

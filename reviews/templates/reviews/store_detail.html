@@ -19,7 +19,14 @@
     <div class=""> {{ store.address }} </div>
     <div class=""> {{ store.phone_num }} </div>
     <div class=""> 음식종류: {{ store.menu }} </div>
+    <form class="my-3" action="{% url 'reviews:store_delete' store.pk %}" method="POST">
+      {% csrf_token %}
+      <a href="{% url 'reviews:store_update' store.pk %}" class="btn btn-outline-primary" method="POST">수정</a>
+      <input class="btn btn-outline-danger" type="submit" value="삭제">
+      <a href="{% url 'reviews:index' %}" class="btn btn-outline-secondary">뒤로</a>
+    </form>
 </div>
+
 
 <div class="container d-flex justify-content-between"> 
   <form action="{% url 'reviews:store_detail' store.pk %}" method="POST">
