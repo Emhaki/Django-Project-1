@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block content %}
-<div style="height:200px;">방지</div>
+
 <div class="container p-5">
   <div class="row">
     <div class="col-8 fs-3">
@@ -17,19 +17,19 @@
       <a href="" class="btn btn-warning">찜하기</a>
     </div>
   </div>
-    <div class=""> {{ store.address }} </div>
-    <div class=""> {{ store.phone_num }} </div>
-    <div class=""> 음식종류: {{ store.menu }} </div>
-    <form class="my-3" action="{% url 'reviews:store_delete' store.pk %}" method="POST">
-      {% csrf_token %}
-      <a href="{% url 'reviews:store_update' store.pk %}" class="btn btn-outline-primary" method="POST">수정</a>
-      <input class="btn btn-outline-danger" type="submit" value="삭제">
-      <a href="{% url 'reviews:index' %}" class="btn btn-outline-secondary">뒤로</a>
-    </form>
+  <div class=""> {{ store.address }} </div>
+  <div class=""> {{ store.phone_num }} </div>
+  <div class=""> 음식종류: {{ store.menu }} </div>
+  <form class="my-3" action="{% url 'reviews:store_delete' store.pk %}" method="POST">
+    {% csrf_token %}
+    <a href="{% url 'reviews:store_update' store.pk %}" class="btn btn-outline-primary" method="POST">수정</a>
+    <input class="btn btn-outline-danger" type="submit" value="삭제">
+    <a href="{% url 'reviews:index' %}" class="btn btn-outline-secondary">뒤로</a>
+  </form>
 </div>
 
 
-<div class="container d-flex justify-content-between"> 
+<div class="container d-flex justify-content-between">
   <form action="{% url 'reviews:store_detail' store.pk %}" method="POST">
     {% csrf_token %}
     <button name="reset" type="submit" value="reset">
@@ -41,7 +41,8 @@
   </div>
   <div>
     <div class="d-flex">
-      <form id='grade-5'action="{% url 'reviews:store_detail' store.pk %}" method="POST" data-store-id="{{ store.pk }}">
+      <form id='grade-5' action="{% url 'reviews:store_detail' store.pk %}" method="POST"
+        data-store-id="{{ store.pk }}">
         {% csrf_token %}
         <button name="grade-5" type="submit" value="grade-5">
           매우 맛있다 {{ review_5 }}
@@ -77,31 +78,31 @@
 {% for review in reviews %}
 <div class="container">
   {% comment %} 링크시작 {% endcomment %}
-  <a href="{% url 'reviews:review_detail' store.pk review.pk %}" class="text-dark"style="text-decoration:none">
+  <a href="{% url 'reviews:review_detail' store.pk review.pk %}" class="text-dark" style="text-decoration:none">
     <div id="comments" class="d-flex justify-content-between mt-3">
       <div>
-      <span class="fs-5 fw-bold">
-        {% for i in user.profile_set.all %}
-            <img src="{{ i.image.url }}" alt="" style="width: 40px; height: 40px; border-radius: 50px;">
-            {% endfor %}
-        {{ review.user.username }}</span> {{ review.content|truncatewords:10 }}
+        <span class="fs-5 fw-bold">
+          {% for i in user.profile_set.all %}
+          <img src="{{ i.image.url }}" alt="" style="width: 40px; height: 40px; border-radius: 50px;">
+          {% endfor %}
+          {{ review.user.username }}</span> {{ review.content|truncatewords:10 }}
       </div>
       <div>
         {% if review.grade == 5 %}
-          {{ review.grade }} 😍 매우 맛있어요
+        {{ review.grade }} 😍 매우 맛있어요
         {% elif review.grade == 4 %}
-          {{ review.grade }} 😊 맛있어요
+        {{ review.grade }} 😊 맛있어요
         {% elif review.grade == 3 %}
-          {{ review.grade }} 😐 괜찮아요
+        {{ review.grade }} 😐 괜찮아요
         {% elif review.grade == 2 %}
-          {{ review.grade }} 😔 별로에요
+        {{ review.grade }} 😔 별로에요
         {% elif review.grade == 1 %}
-          {{ review.grade }} 🤮 토나와요
+        {{ review.grade }} 🤮 토나와요
         {% endif %}
       </div>
     </div>
-    <div class='d-flex justify-content-end mt-2'> 
-      {{ review.created_at|date:"o-m-d D"}} {{review.created_at|time:"H:i"}} 
+    <div class='d-flex justify-content-end mt-2'>
+      {{ review.created_at|date:"o-m-d D"}} {{review.created_at|time:"H:i"}}
     </div>
   </a>
   {% comment %} 링크 끝 {% endcomment %}
