@@ -8,7 +8,7 @@
 <div class="text-center">
   <a href="{% url 'reviews:store' %}">[관리자]가게 생성</a>
 </div>
-{% for store in stores %}
+{% for store in page_obj %}
   <a href="{% url 'reviews:store_detail' store.pk %}" class="text-dark"style='text-decoration:none;'>
     <div class="container">
       <div class="row row-cols-1 row-cols-md-2 g-4">
@@ -39,7 +39,25 @@
   {% endfor %}
 {% endfor %}
 {% comment %} 임시 {% endcomment %}
+<div class="d-flex justify-content-center">
+  <div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
 
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+  </div>
+</div>
 
 
 
