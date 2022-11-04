@@ -7,6 +7,12 @@
 <div class="text-center">
   <a href="{% url 'reviews:store' %}">[관리자]가게 생성</a>
 </div>
+
+<div class="container">
+  <div>{{ title }}</div>
+  <div>{{ address }}</div>
+  <a href="{{ link }}">{{ link }}</a>
+</div>
 {% for store in page_obj %}
 <a href="{% url 'reviews:store_detail' store.pk %}" class="text-dark" style='text-decoration:none;'>
   <div class="container">

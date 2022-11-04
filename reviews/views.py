@@ -10,26 +10,38 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST, require_safe
 import os
 import sys
+import json
 import urllib.request
 
 
 # Create your views here.
 
-# client_id = "im3b1m38pZvAVSzDwwDs"
-# client_secret = "1ruWNjK2X4"
-# encText = urllib.parse.quote("서울맛집")
-# url = "https://openapi.naver.com/v1/search/local?query=" + encText # JSON 결과
+client_id = "fnOyCiACehruwZRDeqiq"
+client_secret = "MQpnJIEaDE"
+encText = urllib.parse.quote("국민대학교")
+url = "https://openapi.naver.com/v1/search/local?query=" + encText # JSON 결과
 
-# request = urllib.request.Request(url)
-# request.add_header("X-Naver-Client-Id",client_id)
-# request.add_header("X-Naver-Client-Secret",client_secret)
-# response = urllib.request.urlopen(request)
-# rescode = response.getcode()
-# if(rescode==200):
-#     response_body = response.read()
-#     print(response_body.decode('utf-8'))
-# else:
-#     print("Error Code:" + rescode)
+request = urllib.request.Request(url)
+request.add_header("X-Naver-Client-Id",client_id)
+request.add_header("X-Naver-Client-Secret",client_secret)
+response = urllib.request.urlopen(request)
+rescode = response.getcode()
+
+if(rescode==200):
+
+    response_body = json.loads(response.read())
+    # response_body_ = response.read()
+    # print(response_body_.decode('utf-8'))
+    print(response_body['items'][0]['title'])
+    print(response_body['items'][0]['link'])
+    print(response_body['items'][0]['address'])
+    
+    title = response_body['items'][0]['title']
+    link = response_body['items'][0]['link']
+    address = response_body['items'][0]['address']
+
+else:
+    print("Error Code:" + rescode)
 
 @require_safe
 def index(request):
@@ -37,9 +49,17 @@ def index(request):
     paginator = Paginator(stores, 1)  # Show 25 contacts per page.
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
+    
+    title
+    link
+    address
+
     context = {
         "stores": stores,
         "page_obj": page_obj,
+        "title": title,
+        "link": link,
+        "address": address,
     }
     return render(request, "reviews/index.html", context)
 
