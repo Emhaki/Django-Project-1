@@ -8,6 +8,7 @@ from django.conf import settings
 # Create your models here.
 class Store(models.Model):
     store_name = models.CharField(max_length=80)
+    content = models.TextField()
     address = models.CharField(max_length=160)
     phone_num = models.CharField(max_length=80)
     menu = models.CharField(max_length=80)
@@ -22,7 +23,7 @@ class Store(models.Model):
         format="JPEG",
         options={"quality": 90},
     )
-    hits= models.PositiveIntegerField(default=0, verbose_name='조회수')
+    hits = models.PositiveIntegerField(default=0, verbose_name="조회수")
 
 
 class Review(models.Model):
