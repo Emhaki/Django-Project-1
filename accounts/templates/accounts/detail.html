@@ -31,22 +31,19 @@
           {% if request.user != user %}
           <form id="follow-form" data-user-id="{{ user.pk }}" method="POST">
             {% if request.user.is_authenticated %}
-              {% csrf_token %}
-              {% if request.user in user.followers.all %}
-                <input class="btn btn-dark btn-lg" type="submit" value="팔로우 취소" style="width: 120px;">
-              {% else %}
-                <input class="btn btn-dark btn-lg" type="submit" value="팔로우" style="width: 120px;">
-              {% endif %}
-                </form>
-              {% else %}
-                {%bootstrap_button button_type="submit" content="로그인 필요합니다."%}
-              {% endif %}
+            {% csrf_token %}
+            {% if request.user in user.followers.all %}
+            <input class="btn btn-dark btn-lg" type="submit" value="팔로우 취소" style="width: 120px;">
+            {% else %}
+            <input class="btn btn-dark btn-lg" type="submit" value="팔로우" style="width: 120px;">
             {% endif %}
           </form>
           {% else %}
           {%bootstrap_button button_type="submit" content="로그인 필요합니다."%}
           {% endif %}
           {% endif %}
+          </form>
+
         </div>
       </div>
       <div class="d-flex justify-content-center align-items-center mt-5">
@@ -58,134 +55,127 @@
         </div>
         <div class="col">
           <div style="cursor:pointer" class="" data-bs-toggle="modal" data-bs-target="#exampleModal2">
-            팔로우 {{ user.followings.count }}
+            팔로우<span id="followings-count"> {{ user.followings.count }}</span>
           </div>
+        </div>
+        <div class="col">
+          <div style="cursor:pointer" class="" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            팔로워 <span id="followers-count">{{ user.followers.count }}</span>
+          </div>
+        </div>
+      </div>
+      {% comment %} {% endcomment %}
+      <!-- Button trigger modal -->
 
-          <div class="col">
-            <div style="cursor:pointer" class="" data-bs-toggle="modal" data-bs-target="#exampleModal2">
-              팔로우 <div id="followings-count">{{ user.followings.count }}</div>
+
+      <!-- Modal -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">팔로워 목록</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              {% for i in user.followers.all %}
+              <div>{{ i }}</div>
+              {% endfor %}
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
             </div>
           </div>
-          <div class="col">
-            <div style="cursor:pointer" class="" data-bs-toggle="modal" data-bs-target="#exampleModal">
-              팔로워 <div id="followers-count">{{ user.followers.count }}</div>
+        </div>
+      </div>
+      <!-- Modal2 -->
+      <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel2">팔로우 목록</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-          </div> 
-        </div>
-      </div>
-    </div>
-    {% comment %} {% endcomment %}
-    <!-- Button trigger modal -->
-
-
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">팔로워 목록</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            {% for i in user.followers.all %}
-            <div>{{ i }}</div>
-            {% endfor %}
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+            <div class="modal-body">
+              {% for i in user.followings.all %}
+              <div>{{ i }}</div>
+              {% endfor %}
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <!-- Modal2 -->
-    <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel2">팔로우 목록</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            {% for i in user.followings.all %}
-            <div>{{ i }}</div>
-            {% endfor %}
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-          </div>
-        </div>
-      </div>
-    </div>
 
-    {% comment %} {% endcomment %}
+      {% comment %} {% endcomment %}
 
+    </div>
   </div>
-</div>
-<div class="fs-3 text-center my-5"><span class="fs-2 text-warning">{{ user.username }}</span>의 리뷰</div>
-<div class="container mb-5">
-  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 gap-5">
-    {% for i in user.review_set.all %}
-    <div class="card m-0" style="width: 18rem; min-height:150px; max-height:1000px;">
-      <a class="text-dark" href="{% url 'reviews:store_detail' i.store.pk %}" style="text-decoration:none;">
-        {% if i.image %}
-        <div class="d-flex justify-content-center mt-1">
-          <img src="{{ i.image.url }}" alt="" style="width: 200px; height: 200px; border-radius: 24px">
-        </div>
-        {% else %}
-        <div class="d-flex justify-content-center mt-1">
-          <img src="https://dummyimage.com/1200x960/000000/c4c4c4" class=""
-            style="width: 200px; height: 200px; border-radius: 24px">
-        </div>
-        {% endif %}
-        <div class="card-body">
-          <div class="fs-3">{{ i.store.store_name }}</div>
-          <div>{{ i.content|truncatewords:10 }}</div>
-        </div>
-        <small class="fs-7 d-flex justify-content-end">
-          {{ i.created_at|date:"o-m-d D" }}
-        </small>
-      </a>
+  <div class="fs-3 text-center my-5"><span class="fs-2 text-warning">{{ user.username }}</span>의 리뷰</div>
+  <div class="container mb-5">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 gap-5">
+      {% for i in user.review_set.all %}
+      <div class="card m-0" style="width: 18rem; min-height:150px; max-height:1000px;">
+        <a class="text-dark" href="{% url 'reviews:store_detail' i.store.pk %}" style="text-decoration:none;">
+          {% if i.image %}
+          <div class="d-flex justify-content-center mt-1">
+            <img src="{{ i.image.url }}" alt="" style="width: 200px; height: 200px; border-radius: 24px">
+          </div>
+          {% else %}
+          <div class="d-flex justify-content-center mt-1">
+            <img src="https://dummyimage.com/1200x960/000000/c4c4c4" class=""
+              style="width: 200px; height: 200px; border-radius: 24px">
+          </div>
+          {% endif %}
+          <div class="card-body">
+            <div class="fs-3">{{ i.store.store_name }}</div>
+            <div>{{ i.content|truncatewords:10 }}</div>
+          </div>
+          <small class="fs-7 d-flex justify-content-end">
+            {{ i.created_at|date:"o-m-d D" }}
+          </small>
+        </a>
+      </div>
+      {% endfor %}
     </div>
-    {% endfor %}
-  </div>
 
 
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script>
-  const form = document.querySelector("#follow-form")
-  const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+      const form = document.querySelector("#follow-form")
+      const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
 
-  form.addEventListener('submit', function(event) {
-    event.preventDefault()
-    const userId = event.target.dataset.userId
+      form.addEventListener('submit', function (event) {
+        event.preventDefault()
+        const userId = event.target.dataset.userId
 
-    axios({
-      method: 'post',
-      url: `/accounts/${userId}/follow/`,
-      headers: {
-        'X-CSRFToken': csrftoken
-      }
-    })
-    .then((response) => {
-      const isFollowed = response.data.is_followed
-      const followBtn = document.querySelector('#follow-form > input[type=submit]')
-      if (isFollowed === true) {
-        followBtn.value = '팔로우 취소'
-      } else {
-        followBtn.value = '팔로우'
-      }
-      const followerCountTag = document.querySelector('#followers-count')
-      const followingCountTag = document.querySelector('#followings-count')
-      const followersCount = response.data.followers_count
-      const followingsCount = response.data.followings_count
-      followerCountTag.innerText = followersCount
-      followingCountTag.innerText = followingsCount
-    })
-    .catch((error) => {
-      console.log(error.response)
-    })
-  })
+        axios({
+          method: 'post',
+          url: `/accounts/${userId}/follow/`,
+          headers: {
+            'X-CSRFToken': csrftoken
+          }
+        })
+          .then((response) => {
+            const isFollowed = response.data.is_followed
+            const followBtn = document.querySelector('#follow-form > input[type=submit]')
+            if (isFollowed === true) {
+              followBtn.value = '팔로우 취소'
+            } else {
+              followBtn.value = '팔로우'
+            }
+            const followerCountTag = document.querySelector('#followers-count')
+            const followingCountTag = document.querySelector('#followings-count')
+            const followersCount = response.data.followers_count
+            const followingsCount = response.data.followings_count
+            followerCountTag.innerText = followersCount
+            followingCountTag.innerText = followingsCount
+          })
+          .catch((error) => {
+            console.log(error.response)
+          })
+      })
 
-</script>
+    </script>
 
-{% endblock content %}
+    {% endblock content %}
