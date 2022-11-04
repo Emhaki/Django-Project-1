@@ -32,13 +32,6 @@
     </div>
   </div>
 </a>
-<div class="text-center mb-4">
-  {{store.address}}
-  {{store.phone_num}}
-  {{store.menu}}
-
-  {{store.image}}
-</div>
 {% for menu in store.menu.all %}
 <p>{{menu.menu_name}}</p>
 {% endfor %}

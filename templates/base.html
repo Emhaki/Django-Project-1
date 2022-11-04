@@ -32,7 +32,7 @@
         <a class="navbar-brand fw-bold" href="#">맛집리스트</a>
         <a class="navbar-brand fw-bold" href="#">가격대별</a>
       </div>
-
+      
       <div class="col-1">
         <div class="nav-item dropdown user-menu-parent ">
           {% if request.user.is_authenticated %}
@@ -68,7 +68,6 @@
               {% if request.user.is_authenticated %}
               <li><a class="navbar-brand fw-bold" href="{% url 'accounts:detail' user.pk %}">회원정보</a></li>
               <li><a class="navbar-brand fw-bold" href="{% url 'accounts:update' %}">회원정보수정</a></li>
-              <li><a class="navbar-brand fw-bold" href="{% url 'accounts:profile' %}">프로필</a></li>
               <li><a class="navbar-brand fw-bold" href="{% url 'accounts:logout' %}">로그아웃</a></li>
               <div class="d-flex" style="align-items:center">
                 {% else %}
@@ -84,6 +83,12 @@
   <br>
   <br>
   <br>
+  {% if messages %}
+  <div class="text-center"> {% for message in messages %}
+    {{ message.tags }} {{message.message }}
+      {% endfor %}
+  </div>
+  {% endif %}
   {% block content %} {% endblock content %}
   {% bootstrap_javascript %}
 </body>

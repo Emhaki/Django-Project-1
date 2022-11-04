@@ -7,7 +7,7 @@ from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from .models import Profile
-
+from django.http import JsonResponse
 
 def create(request):
     if request.method == "POST":
@@ -34,7 +34,9 @@ def login(request):
             return redirect(request.GET.get("next") or "reviews:index")
     else:
         form = AuthenticationForm()
-    context = {"form": form}
+    context = {
+      "form": form,
+    }
     return render(request, "accounts/login.html", context)
 
 
@@ -43,26 +45,27 @@ def logout(request):
     return redirect("reviews:index")
 
 
-@login_required
-def follow(request, pk):
-    user = get_object_or_404(get_user_model(), pk=pk)
-    if request.user == user:
-        messages.warning(request, "자추금지!!!")
-        return redirect("accounts:detail", pk)
-    if request.user in user.followers.all():
-        user.followers.remove(request.user)
-    else:
-        user.followers.add(request.user)
-    return redirect("accounts:detail", pk)
+# @login_required
+# def follow(request, pk):
+#     user = get_object_or_404(get_user_model(), pk=pk)
+#     if request.user == user:
+#         messages.warning(request, "자추금지!!!")
+#         return redirect("accounts:detail", pk)
+#     if request.user in user.followers.all():
+#         user.followers.remove(request.user)
+#     else:
+#         user.followers.add(request.user)
+#     return redirect("accounts:detail", pk)
 
 
 def detail(request, pk):
     user = get_user_model().objects.get(pk=pk)
     profile = user.profile_set.all()[0]
-
+    user_point = (user.review_set.count() * 5) + ((user.comment_set.count() * 1))
     context = {
-      "user": user,
-      "profile": profile,
+        "user": user,
+        "profile": profile,
+        "user_point": user_point,
     }
     return render(request, "accounts/detail.html", context)
 
@@ -81,8 +84,8 @@ def update(request):
 
 
 @login_required
-def profile(request):  # 프로필
-    user = request.user
+def profile(request, pk):  # 프로필
+    user = get_user_model().objects.get(pk=pk)
     reviews = user.review_set.all()
     comments = user.comment_set.all()
     profile = user.profile_set.all()[0]
@@ -102,10 +105,31 @@ def profile_update(request):  # 프로필 업데이트
         form = ProfileForm(request.POST, request.FILES, instance=current_user)
         if form.is_valid():
             form.save()
-            return redirect("accounts:profile")
+            return redirect("reviews:index")
     else:
         form = ProfileForm(instance=current_user)
     context = {
         "profile_form": form,
     }
     return render(request, "accounts/profile_update.html", context)
+
+def follow(request, pk):
+  if request.user.is_authenticated:
+    User = get_user_model()
+    me = request.user
+    you = User.objects.get(pk=pk)
+    if me != you:
+      if you.followers.filter(pk=me.pk).exists():
+        you.followers.remove(me)
+        is_followed = False
+      else:
+        you.followers.add(me)
+        is_followed = True
+      context = {
+        'is_followed': is_followed,
+        'followers_count': you.followers.count(),
+        'followings_count': you.followings.count(),
+      }
+      return JsonResponse(context)
+    return redirect('accounts:detail', you.username)
+  return redirect('accounts:login')

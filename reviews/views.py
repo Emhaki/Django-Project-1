@@ -8,10 +8,11 @@ from django.db.models import Avg
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST, require_safe
-from datetime import date, datetime , timedelta
 import os
 import sys
 import urllib.request
+
+
 # Create your views here.
 
 # client_id = "im3b1m38pZvAVSzDwwDs"
@@ -67,23 +68,23 @@ def store_detail(request, store_pk):
     reviews_ = store.review_set.all()
 
     if request.POST.get("grade-5"):
-        reviews = Review.objects.filter(grade=5)
+        reviews = store.review_set.filter(grade=5)
     elif request.POST.get("grade-4"):
-        reviews = Review.objects.filter(grade=4)
+        reviews = store.review_set.filter(grade=4)
     elif request.POST.get("grade-3"):
-        reviews = Review.objects.filter(grade=3)
+        reviews = store.review_set.filter(grade=3)
     elif request.POST.get("grade-2"):
-        reviews = Review.objects.filter(grade=2)
+        reviews = store.review_set.filter(grade=2)
     elif request.POST.get("grade-1"):
-        reviews = Review.objects.filter(grade=1)
+        reviews = store.review_set.filter(grade=1)
     elif request.POST.get("reset"):
-        reviews = Review.objects.order_by("-pk")
+        reviews = store.review_set.order_by("-pk")
 
-    review_5 = Review.objects.filter(grade=5).count()
-    review_4 = Review.objects.filter(grade=4).count()
-    review_3 = Review.objects.filter(grade=3).count()
-    review_2 = Review.objects.filter(grade=2).count()
-    review_1 = Review.objects.filter(grade=1).count()
+    review_5 = store.review_set.filter(grade=5).count()
+    review_4 = store.review_set.filter(grade=4).count()
+    review_3 = store.review_set.filter(grade=3).count()
+    review_2 = store.review_set.filter(grade=2).count()
+    review_1 = store.review_set.filter(grade=1).count()
 
     review_ave = 0
 
@@ -91,7 +92,7 @@ def store_detail(request, store_pk):
         review_ave = "평가 없음"
 
     if reviews_.count() > 0:
-        ave = Review.objects.aggregate(Avg("grade"))
+        ave = store.review_set.aggregate(Avg("grade"))
 
         # round(값, 표시하고 싶은 자리수)
         review_ave = round(ave["grade__avg"], 2)
@@ -108,7 +109,7 @@ def store_detail(request, store_pk):
         "review_ave": review_ave,
     }
     response = render(request, "reviews/store_detail.html", context)
-    store.hits +=1
+    store.hits += 1
     store.save()
 
     return response
