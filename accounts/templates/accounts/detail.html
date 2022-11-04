@@ -19,6 +19,7 @@
       <div class="d-flex justify-content-evenly">
         <div class="col align-items-center fw-bold fs-4">
           {{ user.username }}
+          <p>유저 포인트 : {{user_point}} </p>
           <p>{{user.email}}
             {% if request.user == user %}
             <a action href="{% url 'accounts:profile_update' %}" class='btn btn-outline-success ms-5'>프로필 수정</a>
@@ -108,7 +109,6 @@
 
   </div>
 </div>
-
 <div class="fs-3 text-center my-5"><span class="fs-2 text-warning">{{ user.username }}</span>의 리뷰</div>
 <div class="container mb-5">
   <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 gap-5">

@@ -8,7 +8,7 @@ from django.db.models import Avg
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST, require_safe
-from datetime import date, datetime , timedelta
+from datetime import date, datetime, timedelta
 
 # Create your views here.
 @require_safe
@@ -89,7 +89,7 @@ def store_detail(request, store_pk):
         "review_ave": review_ave,
     }
     response = render(request, "reviews/store_detail.html", context)
-    store.hits +=1
+    store.hits += 1
     store.save()
 
     return response

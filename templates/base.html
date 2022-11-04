@@ -68,7 +68,6 @@
               {% if request.user.is_authenticated %}
               <li><a class="navbar-brand fw-bold" href="{% url 'accounts:detail' user.pk %}">회원정보</a></li>
               <li><a class="navbar-brand fw-bold" href="{% url 'accounts:update' %}">회원정보수정</a></li>
-
               <li><a class="navbar-brand fw-bold" href="{% url 'accounts:logout' %}">로그아웃</a></li>
               <div class="d-flex" style="align-items:center">
                 {% else %}

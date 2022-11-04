@@ -59,10 +59,11 @@ def follow(request, pk):
 def detail(request, pk):
     user = get_user_model().objects.get(pk=pk)
     profile = user.profile_set.all()[0]
-
+    user_point = (user.review_set.count() * 5) + ((user.comment_set.count() * 1))
     context = {
         "user": user,
         "profile": profile,
+        "user_point": user_point,
     }
     return render(request, "accounts/detail.html", context)
 
