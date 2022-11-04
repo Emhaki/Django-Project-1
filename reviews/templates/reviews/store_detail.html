@@ -8,7 +8,14 @@
   <div class="row">
     <div class="col-7 fs-3">
       {{ store.store_name }} / <span class="text-warning">{{ review_ave }}</span>
-      <p></p>
+      <p>
+        {% if store.image %}
+        <img src="{{ store.image.url }}" class="card-img-top" alt=""
+          style="width: 100px; height: 100px; border-radius: 500px">
+        {% else %}
+        <img src="https://dummyimage.com/1200x960/000000/c4c4c4" class="" style="width: 100px; height: 100px;">
+        {% endif %}
+      </p>
     </div>
     <div class="col-5 p-0">
       <a href="{% url 'reviews:review_create' store.pk %}" class="btn btn-dark">
@@ -17,9 +24,30 @@
       <button href="" class="btn btn-warning">조회수:{{ store.hits }}</button>
     </div>
   </div>
+
   <div class=""> {{ store.address }} </div>
   <div class=""> {{ store.phone_num }} </div>
-  <div class=""> 음식종류: {{ store.menu }} </div>
+  <div class=""> {{ store.menu }} </div>
+  {% if store.price %}
+  <div class=""> {{ store.price }} </div>
+  {% endif %}
+  {% if store.parking %}
+  <div class=""> {{ store.parking }} </div>
+  {% endif %}
+  {% if store.week_time %}
+  <div class=""> {{ store.week_time }} </div>
+  {% endif %}
+  {% if store.weekend %}
+  <div class=""> {{ store.weekend }} </div>
+  {% endif %}
+  {% if store.last_order %}
+  <div class=""> {{ store.last_order }} </div>
+  {% endif %}
+  {% if store.website %}
+  <div class=""> {{ store.website }} </div>
+  {% endif %}
+
+
   <form class="my-3" action="{% url 'reviews:store_delete' store.pk %}" method="POST">
     {% csrf_token %}
     <a href="{% url 'reviews:store_update' store.pk %}" class="btn btn-outline-primary" method="POST">수정</a>
