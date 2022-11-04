@@ -3,37 +3,32 @@
 
 {% block content %}
 
-<div class="container text-center" style="max-width:800px;">
-  <div class="row">
-    <div class="col-4 p-0">
-      {% for i in user.profile_set.all %}
-      {% if i.image %}
-      <img style="width:200px; " src="{{ i.image.url }}" alt="" class="rounded-circle">
-      {% else %}
-      <img src="https://dummyimage.com/1200x960/000000/c4c4c4" class="rounded-circle"
-        style="width: 200px; height: 200px;">
-      {% endif %}
-      {% endfor %}
-    </div>
-    <div class="col-7 p-2">
-      <div class="d-flex justify-content-evenly">
-        <div class="col align-items-center fw-bold fs-4">
-          {{ user.username }}
-          <p>{{user.email}}
-            {% if request.user == user %}
-            <a action href="{% url 'accounts:profile_update' %}" class='btn btn-outline-success ms-5'>프로필 수정</a>
-            {% endif %}
-          </p>
-        </div>
-        <div class="col">
-          {% if request.user != user %}
-          <form action="{% url 'accounts:follow' user.pk %}" method="POST">
+  <div class="container text-center" style="max-width:800px;">
+    <div class="row">
+      <div class="col-4 p-0">
+        {% for i in user.profile_set.all %}
+          <img style="width:200px; "src="{{ i.image.url }}" alt="" class="rounded-circle">
+        {% endfor %}
+      </div>
+      <div class="col-7 p-2">
+        <div class="d-flex justify-content-evenly">
+          <div class="col align-items-center fw-bold fs-4">
+            {{ user.username }}
+          </div>
+          <div class="col">
+            {% if request.user != user %}
+            <form id="follow-form" data-user-id="{{ user.pk }}" method="POST">
             {% if request.user.is_authenticated %}
-            {% csrf_token %}
-            {% if request.user in user.followers.all %}
-            {%bootstrap_button button_type="submit" content="팔로우 취소"%}
-            {% else %}
-            {%bootstrap_button button_type="submit" content="팔로우"%}
+              {% csrf_token %}
+              {% if request.user in user.followers.all %}
+                <input class="btn btn-dark btn-lg" type="submit" value="팔로우 취소" style="width: 120px;">
+              {% else %}
+                <input class="btn btn-dark btn-lg" type="submit" value="팔로우" style="width: 120px;">
+              {% endif %}
+                </form>
+              {% else %}
+                {%bootstrap_button button_type="submit" content="로그인 필요합니다."%}
+              {% endif %}
             {% endif %}
           </form>
           {% else %}
@@ -53,11 +48,17 @@
           <div style="cursor:pointer" class="" data-bs-toggle="modal" data-bs-target="#exampleModal2">
             팔로우 {{ user.followings.count }}
           </div>
-        </div>
-        <div class="col">
-          <div style="cursor:pointer" class="" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            팔로워 {{ user.followers.count }}
+
+          <div class="col">
+            <div style="cursor:pointer" class="" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+              팔로우 <div id="followings-count">{{ user.followings.count }}</div>
+            </div>
           </div>
+          <div class="col">
+            <div style="cursor:pointer" class="" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              팔로워 <div id="followers-count">{{ user.followers.count }}</div>
+            </div>
+          </div> 
         </div>
       </div>
     </div>
@@ -136,5 +137,44 @@
     </div>
     {% endfor %}
   </div>
-</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+  const form = document.querySelector("#follow-form")
+  const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
+
+  form.addEventListener('submit', function(event) {
+    event.preventDefault()
+    const userId = event.target.dataset.userId
+
+    axios({
+      method: 'post',
+      url: `/accounts/${userId}/follow/`,
+      headers: {
+        'X-CSRFToken': csrftoken
+      }
+    })
+    .then((response) => {
+      const isFollowed = response.data.is_followed
+      const followBtn = document.querySelector('#follow-form > input[type=submit]')
+      if (isFollowed === true) {
+        followBtn.value = '팔로우 취소'
+      } else {
+        followBtn.value = '팔로우'
+      }
+      const followerCountTag = document.querySelector('#followers-count')
+      const followingCountTag = document.querySelector('#followings-count')
+      const followersCount = response.data.followers_count
+      const followingsCount = response.data.followings_count
+      followerCountTag.innerText = followersCount
+      followingCountTag.innerText = followingsCount
+    })
+    .catch((error) => {
+      console.log(error.response)
+    })
+  })
+
+</script>
+
 {% endblock content %}
