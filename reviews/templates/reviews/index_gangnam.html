@@ -3,10 +3,8 @@
 {% load static %}
 
 {% block content %}
-<h1>여기가 홈 입니다!</h1>
-<div class="text-center">
-  <a href="{% url 'reviews:store' %}">[관리자]가게 생성</a>
-</div>
+<h1>여기가 강남 맛집 입니다!</h1>
+
 
 {% for store in page_obj %}
 <a href="{% url 'reviews:store_detail' store.pk %}" class="text-dark" style='text-decoration:none;'>
