@@ -8,12 +8,17 @@ from django.conf import settings
 # Create your models here.
 class Store(models.Model):
     store_name = models.CharField(max_length=80)
-    content = models.TextField()
     address = models.CharField(max_length=160)
     phone_num = models.CharField(max_length=80)
     menu = models.CharField(max_length=80)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    price = models.CharField(max_length=80, null=True, blank=True)
+    parking = models.CharField(max_length=80, null=True, blank=True)
+    week_time = models.CharField(max_length=80, null=True, blank=True)
+    weekend = models.CharField(max_length=80, null=True, blank=True)
+    last_order = models.CharField(max_length=80, null=True, blank=True)
+    website = models.CharField(max_length=80, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, blank=True)
+    updated_at = models.DateTimeField(auto_now=True, blank=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     image = ProcessedImageField(
         default="nostoreimg.jpg",
