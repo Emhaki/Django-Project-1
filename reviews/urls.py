@@ -36,4 +36,5 @@ urlpatterns = [
         views.comment_delete,
         name="comment_delete",
     ),
+    path("mz_gangnam/", views.mz_gangnam, name="mz_gangnam")
 ]

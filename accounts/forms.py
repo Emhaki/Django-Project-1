@@ -7,7 +7,11 @@ from django import forms
 class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = get_user_model()
+<<<<<<< HEAD
         fields = ["username", "email",]
+=======
+        fields = ["username", "email"]
+>>>>>>> 0d9780babf1c6df5f6784d53a79289d4e3257d91
 
 
 class CustomUserChangeForm(UserChangeForm):
