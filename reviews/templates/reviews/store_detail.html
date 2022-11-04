@@ -6,15 +6,15 @@
 
 <div class="container p-5">
   <div class="row">
-    <div class="col-8 fs-3">
+    <div class="col-7 fs-3">
       {{ store.store_name }} / <span class="text-warning">{{ review_ave }}</span>
-      <p>조회수:{{ store.hits }}</p>
+      <p></p>
     </div>
-    <div class="col-4 p-0">
+    <div class="col-5 p-0">
       <a href="{% url 'reviews:review_create' store.pk %}" class="btn btn-dark">
         리뷰 쓰기
       </a>
-      <a href="" class="btn btn-warning">찜하기</a>
+      <button href="" class="btn btn-warning">조회수:{{ store.hits }}</button>
     </div>
   </div>
   <div class=""> {{ store.address }} </div>
