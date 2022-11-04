@@ -61,8 +61,8 @@ def detail(request, pk):
     profile = user.profile_set.all()[0]
 
     context = {
-      "user": user,
-      "profile": profile,
+        "user": user,
+        "profile": profile,
     }
     return render(request, "accounts/detail.html", context)
 
@@ -81,8 +81,8 @@ def update(request):
 
 
 @login_required
-def profile(request):  # 프로필
-    user = request.user
+def profile(request, pk):  # 프로필
+    user = get_user_model().objects.get(pk=pk)
     reviews = user.review_set.all()
     comments = user.comment_set.all()
     profile = user.profile_set.all()[0]
@@ -102,7 +102,7 @@ def profile_update(request):  # 프로필 업데이트
         form = ProfileForm(request.POST, request.FILES, instance=current_user)
         if form.is_valid():
             form.save()
-            return redirect("accounts:profile")
+            return redirect("reviews:index")
     else:
         form = ProfileForm(instance=current_user)
     context = {
