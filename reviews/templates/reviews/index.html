@@ -3,42 +3,37 @@
 {% load static %}
 
 {% block content %}
-<h1>여기가 홈 입니다!</h1>
 <div class="text-center">
   <a href="{% url 'reviews:store' %}">[관리자]가게 생성</a>
 </div>
 
-{% for store in page_obj %}
-<a href="{% url 'reviews:store_detail' store.pk %}" class="text-dark" style='text-decoration:none;'>
-  <div class="container">
-    <div class="row row-cols-1 row-cols-md-2 g-4">
-      <div class="col">
-        <div class="card d-flex">
-<<<<<<< HEAD
-=======
-
->>>>>>> 0d9780babf1c6df5f6784d53a79289d4e3257d91
+<div class="container">
+  <div class="row">
+    {% for store in page_obj %}
+    <div class="card col shadow mb-5 bg-body rounded" style="max-width:280px;">
+        <a href="{% url 'reviews:store_detail' store.pk %}" class="text-dark" style='text-decoration:none;'>
           {% if store.image %}
-          <img src="{{ store.image.url }}" class="card-img-top" alt=""
-            style="width: 100px; height: 100px; border-radius: 500px">
+          <img src="{{ store.image.url }}" class="card-img-top my-2" alt=""
+            style="width: 250px; height: 250px; border-radius: 16px">
           {% else %}
-          <img src="https://dummyimage.com/1200x960/000000/c4c4c4" class="" style="width: 100px; height: 100px;">
+          <img src="https://dummyimage.com/1200x960/000000/c4c4c4" class="my4-2" style="width: 250; height: 250px;">
           {% endif %}
-
-          <div class="card-body">
-            <h5 class="card-title">{{store.store_name}}</h5>
+          <div class="card-body p-1">
+            <h5 class="card-title m-0">{{store.store_name}}</h5>
+            <hr class="m-1">
+            <div class="my-2">{{store.address}}</div>
           </div>
-          <div class="d-flex justify-content-end">
-            {{store.created_at}}
-          </div>
-        </div>
-      </div>
+          <small class="d-flex justify-content-end mx-2 text-black-50">
+            {{store.created_at|date:"o-m-d D"}}
+          </small>
+        </a>
     </div>
+    {% endfor %}
   </div>
-</a>
+  
+</div>
 {% for menu in store.menu.all %}
 <p>{{menu.menu_name}}</p>
-{% endfor %}
 {% endfor %}
 {% comment %} 임시 {% endcomment %}
 <div class="d-flex justify-content-center">
