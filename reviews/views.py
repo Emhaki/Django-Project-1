@@ -35,7 +35,7 @@ if(rescode==200):
     print(response_body['items'][0]['title'])
     print(response_body['items'][0]['link'])
     print(response_body['items'][0]['address'])
-    
+
     title = response_body['items'][0]['title']
     link = response_body['items'][0]['link']
     address = response_body['items'][0]['address']
@@ -50,10 +50,6 @@ def index(request):
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
     
-    title
-    link
-    address
-
     context = {
         "stores": stores,
         "page_obj": page_obj,
