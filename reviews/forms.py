@@ -7,6 +7,7 @@ class StoreForm(forms.ModelForm):
         model = Store
         fields = [
             "store_name",
+            "content",
             "address",
             "phone_num",
             "menu",
