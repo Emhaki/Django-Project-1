@@ -9,8 +9,27 @@ from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST, require_safe
 from datetime import date, datetime , timedelta
-
+import os
+import sys
+import urllib.request
 # Create your views here.
+
+# client_id = "im3b1m38pZvAVSzDwwDs"
+# client_secret = "1ruWNjK2X4"
+# encText = urllib.parse.quote("서울맛집")
+# url = "https://openapi.naver.com/v1/search/local?query=" + encText # JSON 결과
+
+# request = urllib.request.Request(url)
+# request.add_header("X-Naver-Client-Id",client_id)
+# request.add_header("X-Naver-Client-Secret",client_secret)
+# response = urllib.request.urlopen(request)
+# rescode = response.getcode()
+# if(rescode==200):
+#     response_body = response.read()
+#     print(response_body.decode('utf-8'))
+# else:
+#     print("Error Code:" + rescode)
+
 @require_safe
 def index(request):
     stores = Store.objects.all()
