@@ -16,13 +16,13 @@
           </div>
           <div class="col">
             {% if request.user != user %}
-            <form action="{% url 'accounts:follow' user.pk %}" method="POST">
+            <form id="follow-form" data-user-id="{{ user.pk }}" method="POST">
             {% if request.user.is_authenticated %}
               {% csrf_token %}
               {% if request.user in user.followers.all %}
-                {%bootstrap_button button_type="submit" content="팔로우 취소"%}
+                <input class="btn btn-dark btn-lg" type="submit" value="팔로우 취소" style="width: 120px;">
               {% else %}
-                {%bootstrap_button button_type="submit" content="팔로우"%}
+                <input class="btn btn-dark btn-lg" type="submit" value="팔로우" style="width: 120px;">
               {% endif %}
                 </form>
               {% else %}
@@ -40,12 +40,12 @@
           </div>
           <div class="col">
             <div style="cursor:pointer" class="" data-bs-toggle="modal" data-bs-target="#exampleModal2">
-              팔로우 {{ user.followings.count }}
+              팔로우 <div id="followings-count">{{ user.followings.count }}</div>
             </div>
           </div>
           <div class="col">
             <div style="cursor:pointer" class="" data-bs-toggle="modal" data-bs-target="#exampleModal">
-              팔로워 {{ user.followers.count }}
+              팔로워 <div id="followers-count">{{ user.followers.count }}</div>
             </div>
           </div> 
         </div>
@@ -125,4 +125,42 @@
       {% endfor %}
     </div>
   </div>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+  const form = document.querySelector("#follow-form")
+  const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
+
+  form.addEventListener('submit', function(event) {
+    event.preventDefault()
+    const userId = event.target.dataset.userId
+
+    axios({
+      method: 'post',
+      url: `/accounts/${userId}/follow/`,
+      headers: {
+        'X-CSRFToken': csrftoken
+      }
+    })
+    .then((response) => {
+      const isFollowed = response.data.is_followed
+      const followBtn = document.querySelector('#follow-form > input[type=submit]')
+      if (isFollowed === true) {
+        followBtn.value = '팔로우 취소'
+      } else {
+        followBtn.value = '팔로우'
+      }
+      const followerCountTag = document.querySelector('#followers-count')
+      const followingCountTag = document.querySelector('#followings-count')
+      const followersCount = response.data.followers_count
+      const followingsCount = response.data.followings_count
+      followerCountTag.innerText = followersCount
+      followingCountTag.innerText = followingsCount
+    })
+    .catch((error) => {
+      console.log(error.response)
+    })
+  })
+
+</script>
 {% endblock content %}
