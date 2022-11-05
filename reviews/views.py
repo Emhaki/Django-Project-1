@@ -241,3 +241,119 @@ def mz_gangnam(request):
         "page_obj": page_obj,
     }
     return render(request, "reviews/index_gangnam.html", context)
+
+
+@require_safe
+def local_list(request):
+    return render(request, "reviews/local_list.html")
+
+
+def local_detail_gn(request):
+    stores = Store.objects.filter(address__icontains="강남구")
+    paginator = Paginator(stores, 5)  # Show 25 contacts per page.
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        "stores": stores,
+        "page_obj": page_obj,
+        "local": "강남구",
+    }
+    return render(request, "reviews/local_detail.html", context)
+
+
+def local_detail_sc(request):
+    stores = Store.objects.filter(address__icontains="서초구")
+    paginator = Paginator(stores, 5)  # Show 25 contacts per page.
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        "stores": stores,
+        "page_obj": page_obj,
+        "local": "서초구",
+    }
+    return render(request, "reviews/local_detail.html", context)
+
+
+def local_detail_ys(request):
+    stores = Store.objects.filter(address__icontains="용산구")
+    paginator = Paginator(stores, 5)  # Show 25 contacts per page.
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        "stores": stores,
+        "page_obj": page_obj,
+        "local": "용산구",
+    }
+    return render(request, "reviews/local_detail.html", context)
+
+
+def local_detail_sd(request):
+    stores = Store.objects.filter(address__icontains="성동구")
+    paginator = Paginator(stores, 5)  # Show 25 contacts per page.
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        "stores": stores,
+        "page_obj": page_obj,
+        "local": "성동구",
+    }
+    return render(request, "reviews/local_detail.html", context)
+
+
+def local_detail_no(request):
+    stores = Store.objects.filter(address__icontains="노원구")
+    paginator = Paginator(stores, 5)  # Show 25 contacts per page.
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        "stores": stores,
+        "page_obj": page_obj,
+        "local": "노원구",
+    }
+    return render(request, "reviews/local_detail.html", context)
+
+
+def local_detail_dj(request):
+    stores = Store.objects.filter(address__icontains="동작구")
+    paginator = Paginator(stores, 5)  # Show 25 contacts per page.
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        "stores": stores,
+        "page_obj": page_obj,
+        "local": "동작구",
+    }
+    return render(request, "reviews/local_detail.html", context)
+
+def local_detail_sp(request):
+    stores = Store.objects.filter(address__icontains="송파구")
+    paginator = Paginator(stores, 5)  # Show 25 contacts per page.
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        "stores": stores,
+        "page_obj": page_obj,
+        "local": "송파구",
+    }
+    return render(request, "reviews/local_detail.html", context)
+
+def local_detail_jn(request):
+    stores = Store.objects.filter(address__icontains="중랑구")
+    paginator = Paginator(stores, 5)  # Show 25 contacts per page.
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        "stores": stores,
+        "page_obj": page_obj,
+        "local": "중랑구",
+    }
+    return render(request, "reviews/local_detail.html", context)
+

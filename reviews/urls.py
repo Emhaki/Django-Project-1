@@ -36,5 +36,13 @@ urlpatterns = [
         views.comment_delete,
         name="comment_delete",
     ),
-    path("mz_gangnam/", views.mz_gangnam, name="mz_gangnam")
+    path("local_list/", views.local_list, name="local_list"),
+    path("local_list/local_detail_gn", views.local_detail_gn, name="local_detail_gn"),
+    path("local_list/local_detail_sc", views.local_detail_sc, name="local_detail_sc"),
+    path("local_list/local_detail_ys", views.local_detail_ys, name="local_detail_ys"),
+    path("local_list/local_detail_sd", views.local_detail_sd, name="local_detail_sd"),
+    path("local_list/local_detail_no", views.local_detail_no, name="local_detail_no"),
+    path("local_list/local_detail_dj", views.local_detail_dj, name="local_detail_dj"),
+    path("local_list/local_detail_sp", views.local_detail_sp, name="local_detail_sp"),
+    path("local_list/local_detail_jn", views.local_detail_jn, name="local_detail_jn"),
 ]
