@@ -24,26 +24,28 @@
       <button href="" class="btn btn-warning">조회수:{{ store.hits }}</button>
     </div>
   </div>
-  <div class=""> {{ store.address }} </div>
-  <div class=""> {{ store.phone_num }} </div>
-  <div class=""> {{ store.menu }} </div>
+  <div class="">{{ store.address }} </div>
+  <div class="">{{ store.phone_num }} </div>
+  <div class="">음식 종류 : {{ store.menu }} </div>
   {% if store.price %}
-  <div class=""> {{ store.price }} </div>
+  <div class="">가격대 : {{ store.price }} </div>
   {% endif %}
   {% if store.parking %}
   <div class=""> {{ store.parking }} </div>
   {% endif %}
   {% if store.week_time %}
-  <div class=""> {{ store.week_time }} </div>
+  <div class="">영업 시간 : {{ store.week_time }} </div>
   {% endif %}
   {% if store.weekend %}
-  <div class=""> {{ store.weekend }} </div>
+  <div class="">휴일 : {{ store.weekend }}요일 </div>
   {% endif %}
   {% if store.last_order %}
-  <div class=""> {{ store.last_order }} </div>
+  <div class="">마지막 주문 : {{ store.last_order }} </div>
   {% endif %}
   {% if store.website %}
-  <div class=""> {{ store.website }} </div>
+  <div class=""> 
+    <a href="{{ store.website }}">{{ store.website }}</a> 
+  </div>
   {% endif %}
 
 

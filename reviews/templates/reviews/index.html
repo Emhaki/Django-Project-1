@@ -10,7 +10,7 @@
 <div class="container">
   <div class="row">
     {% for store in page_obj %}
-    <div class="card col shadow mb-5 bg-body rounded" style="max-width:280px;">
+    <div class="card col shadow mb-5 bg-body rounded g-3" style="max-width:280px;">
         <a href="{% url 'reviews:store_detail' store.pk %}" class="text-dark" style='text-decoration:none;'>
           {% if store.image %}
           <img src="{{ store.image.url }}" class="card-img-top my-2" alt=""
@@ -21,7 +21,9 @@
           <div class="card-body p-1">
             <h5 class="card-title m-0">{{store.store_name}}</h5>
             <hr class="m-1">
-            <div class="my-2">{{store.address}}</div>
+            <div class="my-2">음식 종류 : {{store.menu}}</div>
+            <div class="my-2">가게 주소 : {{store.address}}</div>
+            
           </div>
           <small class="d-flex justify-content-end mx-2 text-black-50">
             {{store.created_at|date:"o-m-d D"}}
@@ -40,8 +42,8 @@
   <div class="pagination">
     <span class="step-links">
       {% if page_obj.has_previous %}
-      <a href="?page=1">&laquo; first</a>
-      <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+      <a href="?page=1">&laquo; 처음</a>
+      <a href="?page={{ page_obj.previous_page_number }}">이전</a>
       {% endif %}
 
       <span class="current">
@@ -49,8 +51,8 @@
       </span>
 
       {% if page_obj.has_next %}
-      <a href="?page={{ page_obj.next_page_number }}">next</a>
-      <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+      <a href="?page={{ page_obj.next_page_number }}">다음</a>
+      <a href="?page={{ page_obj.paginator.num_pages }}">마지막 &raquo;</a>
       {% endif %}
     </span>
   </div>
