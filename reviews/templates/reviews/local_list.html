@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+{% load static %}
+
+{% block content %}
+  <div class="container">
+    <h1>여기는 지역별 맛집 리스트 입니다!</h1>
+
+    <div class="row row-cols-1 row-cols-md-4 g-4">
+
+      <div class="col">
+        <div class="card h-100">
+          <a href="{% url 'reviews:local_detail_gn' %}">
+            <img src="..." class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">강남구</h5>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="card h-100">
+          <a href="{% url 'reviews:local_detail_sc' %}">
+            <img src="..." class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">서초구</h5>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="card h-100">
+          <a href="{% url 'reviews:local_detail_ys' %}">
+            <img src="..." class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">용산구</h5>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="card h-100">
+          <a href="{% url 'reviews:local_detail_sd' %}">
+            <img src="..." class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">성동구</h5>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="card h-100">
+          <a href="{% url 'reviews:local_detail_no' %}">
+            <img src="..." class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">노원구</h5>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="card h-100">
+          <a href="{% url 'reviews:local_detail_dj' %}">
+            <img src="..." class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">동작구</h5>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="card h-100">
+          <a href="{% url 'reviews:local_detail_sp' %}">
+            <img src="..." class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">송파구</h5>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="card h-100">
+          <a href="{% url 'reviews:local_detail_jn' %}">
+            <img src="..." class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">중랑구</h5>
+            </div>
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+{% endblock content %}
