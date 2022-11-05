@@ -16,7 +16,7 @@ from django.views.decorators.http import require_POST, require_safe
 @require_safe
 def index(request):
     stores = Store.objects.order_by("-pk")
-    paginator = Paginator(stores, 5)  # Show 25 contacts per page.
+    paginator = Paginator(stores, 4)  # Show 25 contacts per page.
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
 
@@ -331,6 +331,7 @@ def local_detail_dj(request):
     }
     return render(request, "reviews/local_detail.html", context)
 
+
 def local_detail_sp(request):
     stores = Store.objects.filter(address__icontains="송파구")
     paginator = Paginator(stores, 5)  # Show 25 contacts per page.
@@ -344,6 +345,7 @@ def local_detail_sp(request):
     }
     return render(request, "reviews/local_detail.html", context)
 
+
 def local_detail_jn(request):
     stores = Store.objects.filter(address__icontains="중랑구")
     paginator = Paginator(stores, 5)  # Show 25 contacts per page.
@@ -356,4 +358,3 @@ def local_detail_jn(request):
         "local": "중랑구",
     }
     return render(request, "reviews/local_detail.html", context)
-
