@@ -10,14 +10,13 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST, require_safe
 
 
-
 # Create your views here.
 
 
 @require_safe
 def index(request):
-    stores = Store.objects.all()
-    paginator = Paginator(stores, 1)  # Show 25 contacts per page.
+    stores = Store.objects.order_by("-pk")
+    paginator = Paginator(stores, 5)  # Show 25 contacts per page.
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
 
@@ -233,7 +232,7 @@ def comment_delete(request, store_pk, review_pk, comment_pk):
 
 def mz_gangnam(request):
     stores = Store.objects.filter(address__icontains="강남구")
-    paginator = Paginator(stores, 1)  # Show 25 contacts per page.
+    paginator = Paginator(stores, 7)  # Show 25 contacts per page.
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
 
