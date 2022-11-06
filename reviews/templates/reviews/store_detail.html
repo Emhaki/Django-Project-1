@@ -43,8 +43,8 @@
   <div class="">마지막 주문 : {{ store.last_order }} </div>
   {% endif %}
   {% if store.website %}
-  <div class=""> 
-    <a href="{{ store.website }}">{{ store.website }}</a> 
+  <div class="">
+    <a href="{{ store.website }}">{{ store.website }}</a>
   </div>
   {% endif %}
 
@@ -114,7 +114,7 @@
           {% for i in user.profile_set.all %}
           <img src="{{ i.image.url }}" alt="" style="width: 40px; height: 40px; border-radius: 50px;">
           {% endfor %}
-          {{ review.user.username }}</span> {{ review.content|truncatewords:10 }}
+          {{ review.user.username }}</span> {{ review.content|truncatewords:10 }} {{comment.count}}
       </div>
       <div>
         {% if review.grade == 5 %}
