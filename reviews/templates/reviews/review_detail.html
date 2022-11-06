@@ -27,7 +27,9 @@
   </div>
   <p class="my-3">
     내용 :
-  <pre>{{ review.content }}</pre>
+    <b>
+      <pre>{{ review.content }}</pre>
+    </b>
   </p>
   {% if review.image %}
   <img src="{{ review.image.url }}" alt="{{review.image}}" width="250" height="180">
