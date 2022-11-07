@@ -2,26 +2,75 @@
 {% load django_bootstrap5 %}
 {% block content %}
   <div class="container">
-    {% if not search %}
+    {% if not store_name and not address and not menu and not price %}
       <h1 class="">검색 없음</h1>
     {% else %}
-
-      {% for i in search.all %}
+      {% for i in store_name.all %}
         <div class="">
-          <div class="card h-100">
-            <a href="{% url 'reviews:store_detail' i.pk %}" class="d-flex align-items-center">
+          <div class="card">
+            <a href="{% url 'reviews:store_detail' i.pk %}" class="d-flex align-items-center" style="text-decoration: none; color: black;">
               <img class="m-5" src="{{ i.image.url }}" alt="" style="width: 80px; height: 80px;">
               <div class="card-body">
-                <h5 class="card-title">{{ i.store_name }}</h5>
+                <h5 class="card-title">상점 이름 검색 :
+                  {{ i.store_name }}</h5>
+                <h5 class="card-title">상점 이름 :
+                  {{ i.store_name }}</h5>
               </div>
             </a>
           </div>
         </div>
         <hr>
       {% endfor %}
+      {% for i in address.all %}
+        <div class="">
+          <div class="card">
+            <a href="{% url 'reviews:store_detail' i.pk %}" class="d-flex align-items-center" style="text-decoration: none; color: black;">
+              <img class="m-5" src="{{ i.image.url }}" alt="" style="width: 80px; height: 80px;">
+              <div class="card-body">
+                <h5 class="card-title">주소 검색 :
+                  {{ i.address }}</h5>
+                <h5 class="card-title">상점 이름 :
+                  {{ i.store_name }}</h5>
+              </div>
+            </a>
+          </div>
+        </div>
+        <hr>
+      {% endfor %}
+      {% for i in menu.all %}
+        <div class="">
+          <div class="card">
+            <a href="{% url 'reviews:store_detail' i.pk %}" class="d-flex align-items-center" style="text-decoration: none; color: black;">
+              <img class="m-5" src="{{ i.image.url }}" alt="" style="width: 80px; height: 80px;">
+              <div class="card-body">
+                <h5 class="card-title">메뉴 검색 :
+                  {{ i.menu }}</h5>
+                <h5 class="card-title">상점 이름 :
+                  {{ i.store_name }}</h5>
+              </div>
+            </a>
+          </div>
+        </div>
+        <hr>
+      {% endfor %}
+      {% for i in price.all %}
+        <div class="">
+          <div class="card">
+            <a href="{% url 'reviews:store_detail' i.pk %}" class="d-flex align-items-center" style="text-decoration: none; color: black;">
+              <img class="m-5" src="{{ i.image.url }}" alt="" style="width: 80px; height: 80px;">
+              <div class="card-body">
+                <h5 class="card-title">가격대 검색 :
+                  {{ i.price }}</h5>
+                <h5 class="card-title">상점 이름 :
+                  {{ i.store_name }}</h5>
+              </div>
+            </a>
+          </div>
+        </div>
+        <hr>
+      {% endfor %}
+
     {% endif %}
   </div>
-  <div>{{ title }}</div>
-  <div>{{ address }}</div>
-  <a href="{{ link }}">{{ link }}</a>
+
 {% endblock content %}

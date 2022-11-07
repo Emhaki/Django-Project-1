@@ -154,7 +154,7 @@ def review_create(request, store_pk):
 
 def review_detail(request, store_pk, review_pk):
     review = get_object_or_404(Review, pk=review_pk)
-    
+
     store = Store.objects.get(pk=store_pk)
     context = {
         "review": review,
@@ -201,8 +201,18 @@ def search(request):
     search = Store.objects.all().order_by("-pk")
     q = request.POST.get("q", "")
     if q:
-        search = search.filter(store_name__icontains=q)
-        return render(request, "reviews/search.html", {"search": search, "q": q})
+        store_name = search.filter(store_name__icontains=q)
+        address = search.filter(address__icontains=q)
+        menu = search.filter(menu__icontains=q)
+        price = search.filter(price__icontains=q)
+        context = {
+            "store_name": store_name,
+            "address": address,
+            "menu": menu,
+            "price": price,
+            "q": q,
+        }
+        return render(request, "reviews/search.html", context)
     else:
         return render(request, "reviews/search.html")
 
