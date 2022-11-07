@@ -4,12 +4,11 @@
 
 {% block content %}
   <div class="container">
-
-    <h3>작성자 :
+    <h3>
       {% for i in user.profile_set.all %}
         <img src="{{ i.image.url }}" alt="" style="width: 40px; height: 40px; border-radius: 50px;">
       {% endfor %}
-      <a href="{% url 'accounts:detail' review.user.pk %}">{{ review.user.username }}</a>
+      <a style="text-decoration:none;"href="{% url 'accounts:detail' review.user.pk %}">{{ review.user.username }}</a>
     </h3>
     <p>별점 :
       {{ review.grade }}</p>
@@ -46,16 +45,16 @@
         </form>
       </div>
     {% endif %}
-
+{% comment %} 살펴보기 {% endcomment %}
     {% for comment in comments %}
-      <div class="d-flex px-5" style="height: 3rem;">
-        <div class="col-2 align-self-center fs-7">작성자 :
-          {% for i in user.profile_set.all %}
+      <div class="d-flex" style="height: 3rem;">
+        <div class="col-2 align-self-center fs-7">
+          {% for i in comment.user.profile_set.all %}
             <img src="{{ i.image.url }}" alt="" style="width: 40px; height: 40px; border-radius: 50px;">
           {% endfor %}
           {{comment.user.username}}
         </div>
-        <div class="col-2 align-self-center fs-7">내용 :
+        <div class="col-10 align-self-center fs-7">
           {{comment.content}}</div>
         {% if request.user == comment.user %}
           <form action="{% url 'reviews:comment_delete' store.pk review.pk comment.pk %}" method="POST" class="align-self-center">

@@ -10,7 +10,7 @@
 <div class="container">
   <div class="row">
     {% for store in page_obj %}
-    <div class="card col shadow mb-5 bg-body rounded g-3" style="max-width:280px;">
+    <div class="card shadow mb-5 bg-body rounded" style="max-width:280px;">
         <a href="{% url 'reviews:store_detail' store.pk %}" class="text-dark" style='text-decoration:none;'>
           {% if store.image %}
           <img src="{{ store.image.url }}" class="card-img-top my-2" alt=""
