@@ -1,19 +1,27 @@
 {% extends 'base.html' %}
 {% load django_bootstrap5 %}
 {% block content %}
-<div class="container">
-  {% if not search %}
-  <h1 class="">검색 없음</h1>
-  {% else %}
-  {% for i in search.all %}
-  <h1 class="">
-    <a class="" href="{% url 'reviews:store_detail' i.pk %}">{{ i.store_name }}</a>
-    <hr>
-  </h1>
-  {% endfor %}
-  {% endif %}
-</div>
-<div>{{ title }}</div>
-<div>{{ address }}</div>
-<a href="{{ link }}">{{ link }}</a>
+  <div class="container">
+    {% if not search %}
+      <h1 class="">검색 없음</h1>
+    {% else %}
+
+      {% for i in search.all %}
+        <div class="">
+          <div class="card h-100">
+            <a href="{% url 'reviews:store_detail' i.pk %}" class="d-flex align-items-center">
+              <img class="m-5" src="{{ i.image.url }}" alt="" style="width: 80px; height: 80px;">
+              <div class="card-body">
+                <h5 class="card-title">{{ i.store_name }}</h5>
+              </div>
+            </a>
+          </div>
+        </div>
+        <hr>
+      {% endfor %}
+    {% endif %}
+  </div>
+  <div>{{ title }}</div>
+  <div>{{ address }}</div>
+  <a href="{{ link }}">{{ link }}</a>
 {% endblock content %}
