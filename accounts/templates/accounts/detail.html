@@ -29,7 +29,7 @@
         </div>
         <div class="col">
           {% if request.user != user %}
-          <form id="follow-form" data-user-id="{{ user.pk }}" method="POST">
+          <form id="follow-form" data-user-id="{{ request.user.pk }}" method="POST">
             {% if request.user.is_authenticated %}
             {% csrf_token %}
             {% if request.user in user.followers.all %}
