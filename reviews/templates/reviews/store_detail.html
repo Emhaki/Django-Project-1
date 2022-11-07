@@ -49,12 +49,6 @@
   {% endif %}
 
 
-  <form class="my-3" action="{% url 'reviews:store_delete' store.pk %}" method="POST">
-    {% csrf_token %}
-    <a href="{% url 'reviews:store_update' store.pk %}" class="btn btn-outline-primary" method="POST">수정</a>
-    <input class="btn btn-outline-danger" type="submit" value="삭제">
-    <a href="{% url 'reviews:index' %}" class="btn btn-outline-secondary">뒤로</a>
-  </form>
 </div>
 
 
@@ -114,7 +108,9 @@
           {% for i in user.profile_set.all %}
           <img src="{{ i.image.url }}" alt="" style="width: 40px; height: 40px; border-radius: 50px;">
           {% endfor %}
-          {{ review.user.username }}</span> {{ review.content|truncatewords:10 }} {{comment.count}}
+          {{ review.user.username }}</span> {{ review.content|truncatewords:10 }}
+        {% if review.comment_set.count %}({{review.comment_set.count}})
+        {% endif %}
       </div>
       <div>
         {% if review.grade == 5 %}
