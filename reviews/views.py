@@ -359,3 +359,78 @@ def local_detail_jn(request):
         "local": "중랑구",
     }
     return render(request, "reviews/local_detail.html", context)
+
+
+@require_safe
+def price_list(request):
+    return render(request, "reviews/price_list.html")
+
+
+def price_detail_1man(request):
+    stores = Store.objects.filter(price__icontains="만원 미만")
+    paginator = Paginator(stores, 5)  # Show 25 contacts per page.
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        "stores": stores,
+        "page_obj": page_obj,
+        "price": "만원 미만",
+    }
+    return render(request, "reviews/price_detail.html", context)
+
+
+def price_detail_2man(request):
+    stores = Store.objects.filter(price__icontains="만원-2만원")
+    paginator = Paginator(stores, 5)  # Show 25 contacts per page.
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        "stores": stores,
+        "page_obj": page_obj,
+        "price": "만원-2만원",
+    }
+    return render(request, "reviews/price_detail.html", context)
+
+
+def price_detail_3man(request):
+    stores = Store.objects.filter(price__icontains="2만원-3만원")
+    paginator = Paginator(stores, 5)  # Show 25 contacts per page.
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        "stores": stores,
+        "page_obj": page_obj,
+        "price": "2만원-3만원",
+    }
+    return render(request, "reviews/price_detail.html", context)
+
+
+def price_detail_4man(request):
+    stores = Store.objects.filter(price__icontains="3만원-4만원")
+    paginator = Paginator(stores, 5)  # Show 25 contacts per page.
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        "stores": stores,
+        "page_obj": page_obj,
+        "price": "3만원-4만원",
+    }
+    return render(request, "reviews/price_detail.html", context)
+
+
+def price_detail_4manup(request):
+    stores = Store.objects.filter(price__icontains="4만원 이상")
+    paginator = Paginator(stores, 5)  # Show 25 contacts per page.
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        "stores": stores,
+        "page_obj": page_obj,
+        "price": "4만원 이상",
+    }
+    return render(request, "reviews/price_detail.html", context)

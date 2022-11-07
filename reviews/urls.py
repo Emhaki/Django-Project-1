@@ -45,4 +45,30 @@ urlpatterns = [
     path("local_list/local_detail_dj", views.local_detail_dj, name="local_detail_dj"),
     path("local_list/local_detail_sp", views.local_detail_sp, name="local_detail_sp"),
     path("local_list/local_detail_jn", views.local_detail_jn, name="local_detail_jn"),
+    path("price_list/", views.price_list, name="price_list"),
+    path(
+        "price_list/price_detail_1man",
+        views.price_detail_1man,
+        name="price_detail_1man",
+    ),
+    path(
+        "price_list/price_detail_2man",
+        views.price_detail_2man,
+        name="price_detail_2man",
+    ),
+    path(
+        "price_list/price_detail_3man",
+        views.price_detail_3man,
+        name="price_detail_3man",
+    ),
+    path(
+        "price_list/price_detail_4man",
+        views.price_detail_4man,
+        name="price_detail_4man",
+    ),
+    path(
+        "price_list/price_detail_4manup",
+        views.price_detail_4manup,
+        name="price_detail_4manup",
+    ),
 ]
