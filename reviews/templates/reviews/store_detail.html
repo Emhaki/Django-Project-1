@@ -105,7 +105,7 @@
     <div id="comments" class="d-flex justify-content-between mt-3">
       <div>
         <span class="fs-5 fw-bold">
-          {% for i in user.profile_set.all %}
+          {% for i in review.user.profile_set.all %}
           <img src="{{ i.image.url }}" alt="" style="width: 40px; height: 40px; border-radius: 50px;">
           {% endfor %}
           {{ review.user.username }}</span> {{ review.content|truncatewords:10 }}

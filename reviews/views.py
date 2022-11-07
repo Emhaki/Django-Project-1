@@ -154,6 +154,7 @@ def review_create(request, store_pk):
 
 def review_detail(request, store_pk, review_pk):
     review = get_object_or_404(Review, pk=review_pk)
+    
     store = Store.objects.get(pk=store_pk)
     context = {
         "review": review,
