@@ -8,7 +8,7 @@
       {% for i in review.user.profile_set.all %}
         <img src="{{ i.image.url }}" alt="" style="width: 40px; height: 40px; border-radius: 50px;">
       {% endfor %}
-      <a style="text-decoration:none;"href="{% url 'accounts:detail' review.user.pk %}">{{ review.user.username }}</a>
+      <a href="{% url 'accounts:detail' review.user.pk %} " style="text-decoration:none" class="text-dark">{{ review.user.username }}</a>
     </h3>
     <p>별점 :
       {{ review.grade }}</p>
@@ -52,7 +52,8 @@
           {% for i in comment.user.profile_set.all %}
             <img src="{{ i.image.url }}" alt="" style="width: 40px; height: 40px; border-radius: 50px;">
           {% endfor %}
-          {{comment.user.username}}
+          <a href="{% url 'accounts:detail' comment.user.pk %} " style="text-decoration:none" class="text-dark">{{comment.user.username}}</a>
+          
         </div>
         <div class="col-10 align-self-center fs-7">
           {{comment.content}}</div>
