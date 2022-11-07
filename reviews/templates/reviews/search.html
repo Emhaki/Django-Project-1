@@ -1,19 +1,19 @@
 {% extends 'base.html' %}
 {% load django_bootstrap5 %}
 {% block content %}
-  <div class="container">
-    {% if not search %}
-      <h1 class="">검색 없음</h1>
-    {% else %}
-      {% for i in search.all %}
-        <h1 class="">
-          <a class="" href="{% url 'reviews:store_detail' i.pk %}">{{ i.store_name }}</a>
-          <hr>
-        </h1>
-      {% endfor %}
-    {% endif %}
-  </div>
-  <div>{{ title }}</div>
-  <div>{{ address }}</div>
-  <a href="{{ link }}">{{ link }}</a>
+<div class="container">
+  {% if not search %}
+  <h1 class="">검색 없음</h1>
+  {% else %}
+  {% for i in search.all %}
+  <h1 class="">
+    <a class="" href="{% url 'reviews:store_detail' i.pk %}">{{ i.store_name }}</a>
+    <hr>
+  </h1>
+  {% endfor %}
+  {% endif %}
+</div>
+<div>{{ title }}</div>
+<div>{{ address }}</div>
+<a href="{{ link }}">{{ link }}</a>
 {% endblock content %}
