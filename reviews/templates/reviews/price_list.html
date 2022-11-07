@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+{% load static %}
+
+{% block content %}
+  <div class="container">
+    <h1>여기는 가격별 맛집 리스트 입니다!</h1>
+
+    <div class="card" style="width: 18rem;">
+
+      <div class="col">
+        <div class="card  h-200">
+          <a href="{% url 'reviews:price_detail_1man' %}">
+            <img src="1만원.png" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h2 class="card-title">만원 미만</h2>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="card h-200">
+          <a href="{% url 'reviews:price_detail_2man' %}">
+            <div class="card-body">
+              <h2 class="card-title">만원-2만원</h2>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="card h-200">
+          <a href="{% url 'reviews:price_detail_3man' %}">
+            <div class="card-body">
+              <h2 class="card-title">2만원-3만원</h2>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="card h-200">
+          <a href="{% url 'reviews:price_detail_4man' %}">
+            <div class="card-body">
+              <h2 class="card-title">3만원-4만원</h2>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="card h-200">
+          <a href="{% url 'reviews:price_detail_4manup' %}">
+            <div class="card-body">
+              <h2 class="card-title">4만원 이상</h2>
+            </div>
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+{% endblock content %}
