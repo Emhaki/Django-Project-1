@@ -13,7 +13,7 @@
 <br>
 
 ## 사용 기술 및 개발 계획
-* Django, HTML, CSS
+* Django, HTML, CSS, Bootstrap
 
 * `협업 Tool`: Figma, Notion, Discord, GitHub
 
